@@ -1,11 +1,11 @@
 Package: elections2
 Type: Package
 Title: Wrangle and Visualize Election Data With 2 Candidates or Choices
-Version: 0.1.0
+Version: 0.5.0
 Author: Sharon Machlis
 Maintainer: Sharon Machlis <DoMoreWithR@machlis.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Calculate winners, percents, and victory/loss margins from a spreadsheet or CSV of election results.
+    Additional functions make it easy to generate bar graphs and maps from the data.
 License: MPL-2.0
 Encoding: UTF-8
 LazyData: true
@@ -19,7 +19,7 @@ Imports:
     scales,
     glue,
     htmltools,
-    data.table
+    data.table (>= 1.13.0)
 Depends: 
     ggplot2,
     leaflet,
