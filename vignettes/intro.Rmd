@@ -1,0 +1,54 @@
+---
+title: "intro"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{intro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(elections2)
+```
+
+This package wrangles election result data for elections where there are only two choices -- two candidates (which means ignoring third parties, write-ins, and blanks) or a yes-no ballot question.
+
+The package's main function, `wrangle_results()`, returns information for each row and total on the winner, percents, and percent and vote margins.
+
+## Data prep
+
+Import and wrangle election results from a CSV or Excel file with this package's `wrangle_results()` function. The election results file _must_ be in the following format 3-column format! Column 1 should be the election districts (such as precinct, city, county, etc.). Columns 2 and 3 should be the candidates' names, "Yes" and "No" for ballot questions, etc. The values should be _raw vote totals_ and not percents.
+
+Do _not_ include any column or row totals in the file! 
+
+```{r import_results}
+
+results_file <- system.file("extdata", "FakeElectionResults.xlsx", package = "elections2")
+
+my_election_results <- wrangle_results(results_file)
+
+```
+
+You can save the wrangled election results data.table to its own variable from the my_election_results list, excluding the Total row for use in graphs and maps, with code such as:
+
+```{r newobj}
+
+my_election_data <- my_election_results[my_election_results[[1]] != "Total"]
+
+```
+
+Note that this result is a data.table, which is a special type of data frame with extra properties used by the data.table package. 
+
+It will be in a format such as
+
+```{r viewdata }
+head(my_election_data, n = 3)
+
+```

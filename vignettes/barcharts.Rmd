@@ -1,0 +1,111 @@
+---
+title: "barcharts"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{barcharts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(elections2)
+```
+
+To create a bar chart with this package's `bargraph_of_margins()` function, first wrangle some election results with the `wrangle_results()` function:
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+results_file <- system.file("extdata", "FakeElectionResults.xlsx", package = "elections2")
+
+my_election_results <- wrangle_results(results_file)
+
+my_election_data <- my_election_results[my_election_results[[1]] != "Total"]
+
+```
+
+
+I find it useful to decide my color scheme at the outset. In the U.S., Democrats as blue and Republicans as red is a well-known convention -- and worth avoiding in the U.S. for other types of elections such as primaries or ballot questions.
+
+I'll use a couple of colors from a [ColorBrewer diverging palette](https://colorbrewer2.org/#type=diverging&scheme=PRGn&n=9)
+
+```{r}
+
+my_palette <- c("#9970ab", "#5aae61", "#f7f7f7")
+
+```
+
+
+For a relatively small number of election districts, you can do a quick bar chart of the winner's percent margin or raw-vote margin for each district with the `bargraph_of_margins()` function.
+
+```{r graph1, warning=FALSE, message=FALSE}
+
+bargraph_of_margins(election_df = my_election_data, Precinct, Marcy_Pct_Margin)
+
+
+```
+
+
+This function returns a ggplot object. 
+
+If, as in this example, your election districts are _numbers showing up as characters_ that are sorting like 1, 10, 11 . . . you can sort them as numbers without converting them to numbers by changing the column to an ordered factor. This code works:
+
+```{r}
+my_election_data$Precinct <- factor(my_election_data$Precinct, levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"), ordered = TRUE)
+```
+
+If you don't want to write out your levels manually, use the gtools package's mixedsort() function:
+
+```{r eval=FALSE}
+my_election_data$Precinct <- factor(my_election_data$Precinct, levels = gtools::mixedsort(my_election_data$Precinct), ordered = TRUE)
+
+```
+
+
+You can also change the theme with the function's `theme` argument and add a headline with the `headline` argument.
+
+If you are familiar with ggplot2, you can add to or tweak the graph objects, such as changing the y axis to show as percents. 
+
+
+```{r graph2, warning=FALSE, message=FALSE}
+
+bargraph_of_margins(election_df = my_election_data, Precinct, Marcy_Pct_Margin, theme = theme_classic(), headline = "Marcy's Percentage Point Margin by Precinct") +
+  scale_y_continuous(labels = scales::percent)
+
+
+```
+
+
+You can also use the same `bargraph_of_margins()` function to plot the margin of victory/loss for the winner in each election district by raw vote totals, as opposed to percentage difference, adding commas to the y axis if needed (although they're not in this case)
+
+```{r graph3, warning=FALSE, message=FALSE}
+
+bargraph_of_margins(election_df = my_election_data, Precinct, Marcy_Margin, headline = "Marcy's Vote Margin of Victory (Purple) or Loss (Green) by Precinct") +
+  scale_y_continuous(labels = scales::comma)
+
+```
+
+Sort the bars in descending order with the `order_bars_desc = TRUE` argument:
+
+```{r message=FALSE, warning=FALSE}
+
+bargraph_of_margins(my_election_data, Precinct, Marcy_Pct_Margin, order_bars_desc = TRUE)
+
+
+```
+
+You can turn any of these graphs into interactive HTML versions with the plotly package's ggplotly function.
+
+```{r message=FALSE, warning=FALSE}
+
+plotly::ggplotly(
+    bargraph_of_margins(my_election_data, Precinct, Marcy_Pct_Margin, theme = theme_classic()) +
+    scale_y_continuous(labels = scales::percent)
+)
+
+```

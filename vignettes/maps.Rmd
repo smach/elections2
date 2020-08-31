@@ -1,0 +1,98 @@
+---
+title: "maps"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{maps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(elections2)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+### Example 1 - City Precincts
+
+Import your election results with the wrangle_results(results_file) if you haven't already, making sure to create a version with no total row.
+
+```{r}
+
+results_file <- system.file("extdata", "FakeElectionResults.xlsx", package = "elections2")
+
+my_election_results <- wrangle_results(results_file)
+
+my_election_data <- my_election_results[my_election_results[[1]] != "Total"]
+```
+
+To make a map, you'll need to import a shapefile of your election districts -- precincts, cities, counties, states, etc. -- into R using the sf package's `st_read()` function. This example imports precinct shapefiles for the city of Framingham, Massachusetts.
+
+```{r import_shapefile, message=FALSE, echo=FALSE}
+my_shapefile <- system.file("extdata", "FraminghamDistrictsAndPrecincts2018/framingham.shp", package = "elections2")
+
+
+my_geometry <- sf::st_read(my_shapefile, quiet = TRUE)
+
+
+```
+
+
+_Make sure you have a common column in election data and the GIS file that use identical values for your election districts._
+
+
+You can use any number of ways to check if two vectors are identical. I'm using testthat::expect_equal() because it gives some explanations if the two objects aren't equal. Base R `identical()` just shows TRUE or FALSE.
+
+
+```{r datacheck}
+testthat::expect_equal(
+  (sort(my_election_data$Precinct)), 
+  sort(my_geometry$precinct)
+)
+
+```
+
+In this data set, I need to either get rid of the "P" in the geometry or add it to my results. I'll get rid of it in the geometry and turn these into ordered factors so they sort correctly in a table or graph. What _you_ need to do in this step, if anything, will depend on your specific election-district data.
+
+```{r string2orderedfactor}
+
+my_geometry$precinct <- gsub("P", "", my_geometry$precinct)
+
+
+testthat::expect_equal(
+  (sort(my_election_data$Precinct)), 
+  sort(my_geometry$precinct)
+)
+
+
+```
+
+Once I'm sure I have identical column values for my election districts, I can join the geometry with the results using base R's `merge()`:
+
+```{r join_data, warning=FALSE}
+
+election_results_for_map <- merge(my_geometry, my_election_data, by.x = "precinct", by.y = "Precinct") 
+
+```
+
+I'm also going to change the name of the resulting district column from precinct to Precinct so it will show better on the map. 
+
+```{r}
+names(election_results_for_map)[1] <- "Precinct"
+```
+
+
+Now I can use the map_election_results() function:
+
+```{r}
+
+map_election_results(election_results_for_map, win_col = "Marcy_Pct", lose_col = "Joe_Pct", election_district_col = "Precinct", "Greens", "Purples")
+
+```
+
