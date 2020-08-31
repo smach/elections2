@@ -90,7 +90,7 @@ names(election_results_for_map)[1] <- "Precinct"
 
 Now I can use the map_election_results() function:
 
-```{r}
+```{r map1, fig.width=7, fig.height=7}
 
 map_election_results(election_results_for_map, win_col = "Marcy_Pct", lose_col = "Joe_Pct", election_district_col = "Precinct", "Greens", "Purples")
 

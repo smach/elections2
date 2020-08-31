@@ -6,7 +6,7 @@
 #'
 #' @return data.table with additional columns for total votes, winner, winner percent, loser's percent, winner's vote margin, and winner's percentage point margin.
 #' @export
-#'
+#' @importFrom data.table ":="
 
 wrangle_results <- function(election_results_file) {
   results <- rio::import(election_results_file)

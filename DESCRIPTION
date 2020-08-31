@@ -18,11 +18,11 @@ Imports:
     rlang,
     scales,
     glue,
-    htmltools
+    htmltools,
+    data.table
 Depends: 
     ggplot2,
     leaflet,
-    data.table,
     R (>= 3.5)
 Suggests: 
     plotly,

@@ -43,7 +43,7 @@ my_palette <- c("#9970ab", "#5aae61", "#f7f7f7")
 
 For a relatively small number of election districts, you can do a quick bar chart of the winner's percent margin or raw-vote margin for each district with the `bargraph_of_margins()` function.
 
-```{r graph1, warning=FALSE, message=FALSE}
+```{r graph1, warning=FALSE, message=FALSE, fig.width=7}
 
 bargraph_of_margins(election_df = my_election_data, Precinct, Marcy_Pct_Margin)
 
@@ -72,7 +72,7 @@ You can also change the theme with the function's `theme` argument and add a hea
 If you are familiar with ggplot2, you can add to or tweak the graph objects, such as changing the y axis to show as percents. 
 
 
-```{r graph2, warning=FALSE, message=FALSE}
+```{r graph2, warning=FALSE, message=FALSE, fig.width=7}
 
 bargraph_of_margins(election_df = my_election_data, Precinct, Marcy_Pct_Margin, theme = theme_classic(), headline = "Marcy's Percentage Point Margin by Precinct") +
   scale_y_continuous(labels = scales::percent)
@@ -83,7 +83,7 @@ bargraph_of_margins(election_df = my_election_data, Precinct, Marcy_Pct_Margin, 
 
 You can also use the same `bargraph_of_margins()` function to plot the margin of victory/loss for the winner in each election district by raw vote totals, as opposed to percentage difference, adding commas to the y axis if needed (although they're not in this case)
 
-```{r graph3, warning=FALSE, message=FALSE}
+```{r graph3, warning=FALSE, message=FALSE, fig.width=7}
 
 bargraph_of_margins(election_df = my_election_data, Precinct, Marcy_Margin, headline = "Marcy's Vote Margin of Victory (Purple) or Loss (Green) by Precinct") +
   scale_y_continuous(labels = scales::comma)
@@ -92,7 +92,7 @@ bargraph_of_margins(election_df = my_election_data, Precinct, Marcy_Margin, head
 
 Sort the bars in descending order with the `order_bars_desc = TRUE` argument:
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, fig.width=7}
 
 bargraph_of_margins(my_election_data, Precinct, Marcy_Pct_Margin, order_bars_desc = TRUE)
 
@@ -101,7 +101,7 @@ bargraph_of_margins(my_election_data, Precinct, Marcy_Pct_Margin, order_bars_des
 
 You can turn any of these graphs into interactive HTML versions with the plotly package's ggplotly function.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, fig.width=7}
 
 plotly::ggplotly(
     bargraph_of_margins(my_election_data, Precinct, Marcy_Pct_Margin, theme = theme_classic()) +
