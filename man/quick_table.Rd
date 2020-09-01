@@ -9,7 +9,8 @@ quick_table(
   win_col_name,
   pagination = 20,
   win_color = "#c2a5cf",
-  lose_color = "#a6dba0"
+  lose_color = "#a6dba0",
+  use_regex_searching = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ quick_table(
 \item{win_color}{character string for color bar in winner's percent column, defaults to "#c2a5cf" (a light purple)}
 
 \item{lose_color}{character string for color bar in winner's percent column, defaults to "#a6dba0" (a light green)}
+
+\item{use_regex_searching}{logical whether to allow searching by regular expression, defaults to TRUE}
 }
 \value{
 html widget with interactive table of results

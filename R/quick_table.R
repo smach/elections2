@@ -10,6 +10,7 @@
 #' @param pagination integer how many rows to display on each color
 #' @param win_color character string for color bar in winner's percent column, defaults to "#c2a5cf" (a light purple)
 #' @param lose_color character string for color bar in winner's percent column, defaults to "#a6dba0" (a light green)
+#' @param use_regex_searching logical whether to allow searching by regular expression, defaults to TRUE
 #'
 #' @return html widget with interactive table of results
 #' @export
@@ -17,7 +18,7 @@
 #' @examples
 #' my_election_results <- wrangle_results(system.file("extdata", "FakeElectionResults.xlsx", package = "elections2"))
 #' quick_table(my_election_results, "Marcy")
-quick_table <- function(election_df, win_col_name, pagination = 20, win_color = "#c2a5cf", lose_color = "#a6dba0") {
+quick_table <- function(election_df, win_col_name, pagination = 20, win_color = "#c2a5cf", lose_color = "#a6dba0", use_regex_searching = TRUE) {
   candidates <- names(election_df)[1:3]
   election_district_col_name <- candidates[1]
   if(candidates[2] != win_col_name) {
@@ -29,7 +30,8 @@ quick_table <- function(election_df, win_col_name, pagination = 20, win_color = 
   the_table <- DT::datatable(election_df[, c(1:7)], rownames = FALSE, filter = 'top',
                              class = "stripe cell-border hover",
                              options = list(
-                               pageLength = pagination
+                               pageLength = pagination,
+                               search = list(regex = use_regex_searching)
                              )) %>%
     DT::formatCurrency(c(2,3,4,8), currency = '', digits = 0) %>%
     DT::formatPercentage(6:7, digits = 1) %>%
