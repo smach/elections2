@@ -14,6 +14,10 @@
 #'
 #' @return ggplot object
 #' @export
+#' @examples
+#' my_election_results <- wrangle_results(system.file("extdata", "FakeElectionResults.xlsx", package = "elections2")) %>%
+#' dplyr::filter(Precinct != "Total")
+#' bargraph_of_margins(my_election_results, Precinct, Marcy_Pct_Margin, order_bars_desc = TRUE, headline = "Marcy's Election Margins by Precinct")
 #'
 bargraph_of_margins <- function(election_df, district_col, margin_col, headline = "", palette = c("#9970ab", "#5aae61", "#f7f7f7"), winner_col = Winner, theme = theme_minimal(), order_bars_desc = FALSE) {
 

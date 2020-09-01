@@ -1,4 +1,4 @@
-#' Framingham precinct sf object
+#' Data: Framingham precinct sf object
 #'
 #' A geospatial sf object from a shapefile via the city of Framingham data portal with precinct geometry
 #'
@@ -18,7 +18,7 @@
 
 
 
-#' Massachusetts city and town sf object
+#' Data: Massachusetts city and town sf object
 #'
 #' A geospatial sf object from a Massachusetts shapefile via Mass GIS
 #'
