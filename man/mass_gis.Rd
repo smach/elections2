@@ -3,7 +3,7 @@
 \docType{data}
 \name{mass_gis}
 \alias{mass_gis}
-\title{Massachusetts city and town sf object}
+\title{Data: Massachusetts city and town sf object}
 \format{
 An sf object with 351 rows of 18 variables:
 \describe{

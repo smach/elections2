@@ -15,3 +15,6 @@ data.table with additional columns for total votes, winner, winner percent, lose
 \description{
 Get election winner and loser by election district from spreadsheet or CSV file
 }
+\examples{
+my_election_results <- wrangle_results(system.file("extdata", "FakeElectionResults.xlsx", package = "elections2"))
+}

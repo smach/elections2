@@ -19,7 +19,8 @@ Imports:
     scales,
     glue,
     htmltools,
-    data.table (>= 1.13.0)
+    data.table (>= 1.13.0),
+    DT
 Depends: 
     ggplot2,
     leaflet,

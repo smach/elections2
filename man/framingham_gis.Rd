@@ -3,7 +3,7 @@
 \docType{data}
 \name{framingham_gis}
 \alias{framingham_gis}
-\title{Framingham precinct sf object}
+\title{Data: Framingham precinct sf object}
 \format{
 An sf object with 18 rows of 7 variables:
 \describe{

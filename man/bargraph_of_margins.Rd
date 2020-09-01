@@ -38,3 +38,9 @@ ggplot object
 \description{
 Create bar graphs of winner's margin per district by percent or raw votes
 }
+\examples{
+my_election_results <- wrangle_results(system.file("extdata", "FakeElectionResults.xlsx", package = "elections2")) \%>\%
+dplyr::filter(Precinct != "Total")
+bargraph_of_margins(my_election_results, Precinct, Marcy_Pct_Margin, order_bars_desc = TRUE, headline = "Marcy's Election Margins by Precinct")
+
+}

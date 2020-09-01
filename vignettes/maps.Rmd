@@ -19,6 +19,13 @@ library(elections2)
 knitr::opts_chunk$set(error = TRUE)
 ```
 
+This package has two convenience functions for turning wrangled election results into interactive Leaflet maps. You will need to have a shapefile of your election districts (precincts, cities, etc.)
+
+The `map_election_results()` function generates a map with one color for each candidate. Color intensity depends on the value of percent or total number of votes won in each district.
+
+`map_election_results_2layers()` puts each candidate's results on a different map layer.
+
+
 ### Example 1 - City Precincts
 
 Import your election results with the wrangle_results(results_file) if you haven't already, making sure to create a version with no total row.
@@ -95,4 +102,8 @@ Now I can use the map_election_results() function:
 map_election_results(election_results_for_map, win_col = "Marcy_Pct", lose_col = "Joe_Pct", election_district_col = "Precinct", "Greens", "Purples")
 
 ```
+
+
+
+
 

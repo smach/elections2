@@ -3,6 +3,8 @@
 export("%>%")
 export(bargraph_of_margins)
 export(map_election_results)
+export(map_election_results_2layers)
+export(quick_table)
 export(wrangle_results)
 importFrom(data.table,":=")
 importFrom(magrittr,"%>%")
