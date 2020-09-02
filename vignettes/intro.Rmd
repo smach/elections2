@@ -20,7 +20,7 @@ library(elections2)
 
 This package wrangles election result data for elections where there are only two choices -- two candidates (which means ignoring third parties, write-ins, and blanks) or a yes-no ballot question.
 
-The package's main function, `wrangle_results()`, returns information for each row and total on the winner, percents, and percent and vote margins.
+The package's main function, `wrangle_results()`, returns information for each row and total on the winner, percents, and percent and vote margins. It does not deal with turnout columns.
 
 ## Data prep
 
@@ -52,3 +52,7 @@ It will be in a format such as
 head(my_election_data, n = 3)
 
 ```
+
+If you have turnout information, I suggest importing that separately and then joining that to the data.table created by `wrangle_results()`.
+
+

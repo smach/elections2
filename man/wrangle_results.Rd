@@ -4,10 +4,12 @@
 \alias{wrangle_results}
 \title{Get election winner and loser by election district from spreadsheet or CSV file}
 \usage{
-wrangle_results(election_results_file)
+wrangle_results(election_results_file, turnout_columns = FALSE)
 }
 \arguments{
-\item{election_results_file}{Excel or CSV file of election results with only two candidates (or yes/no for ballot questions). Should have only 3 columns: column 1 the precinct, city, county, state, or other election district; and columns 2 and 3 the candidate names (or yes and no, or any other two choices). Do NOT include any column or row totals.}
+\item{election_results_file}{Excel or CSV file of election results with only two candidates (or yes/no for ballot questions). If turnout_columns = FALSE, your spreadsheet should have only 3 required columns: Column 1 the precinct, city, county, state, or other election district; and columns 2 and 3 the candidate names (or yes and no, or any other two choices). Do NOT include any column or row totals. If turnout_columns = TRUE, include columns for total votes cast and total registered voters (but NOT turnout percent).}
+
+\item{turnout_columns}{logical TRUE if spreadsheet includes columns for total votes cast and total registered voters. Defaults to FALSE.}
 }
 \value{
 data.table with additional columns for total votes, winner, winner percent, loser's percent, winner's vote margin, and winner's percentage point margin.
