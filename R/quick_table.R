@@ -18,6 +18,7 @@
 #' @examples
 #' my_election_results <- wrangle_results(system.file("extdata", "FakeElectionResults.xlsx", package = "elections2"))
 #' quick_table(my_election_results, "Marcy")
+
 quick_table <- function(election_df, col_with_winners_vote_total, pagination = 20, win_color = "#c2a5cf", lose_color = "#a6dba0", use_regex_searching = TRUE, n_turnout_cols = 0) {
   candidates <- names(election_df)[1:3]
   election_district_col_name <- candidates[1]

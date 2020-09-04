@@ -73,8 +73,6 @@ my_election_data <- my_election_data %>%
   mutate(
     Precinct = factor(Precinct, levels = gtools::mixedsort(Precinct), ordered = TRUE)
   )
-  
-
 
 ```
 

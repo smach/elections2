@@ -20,6 +20,9 @@ map_election_results <- function(joined_df, win_col, lose_col, election_district
   winner_name <- gsub("(^.*?)_.*$", "\\1", win_col)
   loser_name <- gsub("(^.*?)_.*$", "\\1", lose_col)
   joined_df <- sf::st_transform(joined_df, "+proj=longlat +datum=WGS84")
+  if(grepl("_Margin", win_col)) {
+    joined_df[[lose_col]] <- (joined_df[[win_col]]) * -1
+  }
 
   min_max_values <- range(c(joined_df[[win_col]], joined_df[[lose_col]]), na.rm = TRUE)
 
@@ -33,10 +36,27 @@ map_election_results <- function(joined_df, win_col, lose_col, election_district
   na_df <- joined_df[joined_df$Winner == "Unknown",]
 
 
-  winner_popup <- glue::glue("<strong>{election_district_col}: {winner_df[[election_district_col]]}</strong><br /><strong>Winner: {winner_df[['Winner']]}</strong><br /<br>{winner_name}: {scales::percent(winner_df[[win_col]])}<br />{loser_name}: {scales::percent(winner_df[[lose_col]])}")  %>%   lapply(htmltools::HTML)
+if(grepl("_Pct", win_col)) {
+  winner_popup <- glue::glue("<strong>{election_district_col}: {winner_df[[election_district_col]]}</strong><br /><strong>Winner: {winner_df[['Winner']]}</strong><br /<br>{winner_name}: {scales::percent(winner_df[[win_col]], accuracy = .1)}<br />{loser_name}: {scales::percent(winner_df[[lose_col]], accuracy = .1)}")  %>%   lapply(htmltools::HTML)
 
-  loser_popup <- glue::glue("<strong>{election_district_col}: {loser_df[[election_district_col]]}</strong><br /><strong>Winner: {loser_df[['Winner']]}</strong><br /<br>{winner_name}: {scales::percent(loser_df[[win_col]])}<br />{loser_name}: {scales::percent(loser_df[[lose_col]])}")  %>%   lapply(htmltools::HTML)
+  loser_popup <- glue::glue("<strong>{election_district_col}: {loser_df[[election_district_col]]}</strong><br /><strong>Winner: {loser_df[['Winner']]}</strong><br /<br>{winner_name}: {scales::percent(loser_df[[win_col]], accuracy = .1)}<br />{loser_name}: {scales::percent(loser_df[[lose_col]], accuracy = .1)}")  %>%   lapply(htmltools::HTML)
 
+} else if (grepl("_Margin", win_col)) {
+
+  winner_popup <- glue::glue("<strong>{election_district_col}: {winner_df[[election_district_col]]}</strong><br /><strong>Winner: {winner_df[['Winner']]}</strong><br /<br>Margin: {scales::comma(winner_df[[win_col]], accuracy = 1)}")  %>%   lapply(htmltools::HTML)
+
+  loser_popup <- glue::glue("<strong>{election_district_col}: {loser_df[[election_district_col]]}</strong><br /><strong>Winner: {loser_df[['Winner']]}</strong><br /<br>Margin: {scales::comma(loser_df[[lose_col]], accuracy = 1)}")  %>%   lapply(htmltools::HTML)
+
+
+} else {
+
+  winner_popup <- glue::glue("<strong>{election_district_col}: {winner_df[[election_district_col]]}</strong><br /><strong>Winner: {winner_df[['Winner']]}</strong><br /<br>{winner_name}: {scales::comma(winner_df[[win_col]], accuracy = 1)}<br />{loser_name}: {scales::comma(winner_df[[lose_col]], accuracy = 1)}")  %>%   lapply(htmltools::HTML)
+
+  loser_popup <- glue::glue("<strong>{election_district_col}: {loser_df[[election_district_col]]}</strong><br /><strong>Winner: {loser_df[['Winner']]}</strong><br /<br>{winner_name}: {scales::comma(loser_df[[win_col]], accuracy = 1)}<br />{loser_name}: {scales::comma(loser_df[[lose_col]], accuracy = 1)}")  %>%   lapply(htmltools::HTML)
+
+
+
+}
 
   my_map<- leaflet() %>%
     addProviderTiles(map_tiles) %>%
