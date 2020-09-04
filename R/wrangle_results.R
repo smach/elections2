@@ -7,6 +7,7 @@
 #' @return data.table with additional columns for total votes, winner, winner percent, loser's percent, winner's vote margin, and winner's percentage point margin.
 #' @export
 #' @importFrom data.table ":="
+#' @import data.table
 #'@examples
 #' my_election_results <- wrangle_results(system.file("extdata", "FakeElectionResults.xlsx", package = "elections2"))
 
@@ -14,15 +15,23 @@ wrangle_results <- function(election_results_file, turnout_columns = FALSE) {
   results_all <- rio::import(election_results_file)
   results <- results_all[, 1:3]
   results <- janitor::adorn_totals(results, c("row", "col"))
-  original_names <- names(results)
-  names(results) <- c("District", "ChoiceA", "ChoiceB", "Total")
-  data.table::setDT(results)
+
+   data.table::setDT(results)
+
+   original_names <- names(results)
+  temp_names <- c("District", "ChoiceA", "ChoiceB", "Total")
+
+ names(results) <- temp_names
+
+
   results[, Winner := data.table::fcase(
     ChoiceA > ChoiceB, original_names[2],
     ChoiceB > ChoiceA, original_names[3],
     ChoiceA == ChoiceB, "Tie",
     default = "Unknown"
   ) ]
+
+
   names(results) <- c(original_names , "Winner")
 
   election_winner <-   results$Winner[nrow(results)]
@@ -52,7 +61,6 @@ if (turnout_columns) {
   results_optional$TurnoutPct <- round( (results_optional[[1]] / results_optional[[2]]), 3)
   results <- cbind(results, results_optional)
 }
-
 
 
   return(results)

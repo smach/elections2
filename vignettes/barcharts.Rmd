@@ -59,15 +59,34 @@ If, as in this example, your election districts are _numbers showing up as chara
 my_election_data$Precinct <- factor(my_election_data$Precinct, levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"), ordered = TRUE)
 ```
 
-If you don't want to write out your levels manually, use the gtools package's mixedsort() function:
+If you don't want to write out your levels manually, use the gtools package's mixedsort() function.
 
 ```{r eval=FALSE}
 my_election_data$Precinct <- factor(my_election_data$Precinct, levels = gtools::mixedsort(my_election_data$Precinct), ordered = TRUE)
 
 ```
 
+Tidyverse syntax with dplyr - make sure dplyr is loaded into your working session -- would be
 
-You can also change the theme with the function's `theme` argument and add a headline with the `headline` argument.
+```{r eval=FALSE}
+my_election_data <- my_election_data %>%
+  mutate(
+    Precinct = factor(Precinct, levels = gtools::mixedsort(Precinct), ordered = TRUE)
+  )
+  
+
+
+```
+
+
+Since elections2 uses the data.table package, data.table syntax works for this as well:
+
+```{r eval=FALSE}
+my_election_data[, Precinct := factor(Precinct, levels = gtools::mixedsort(Precinct), ordered = TRUE)]
+```
+
+
+You can  change the theme with the function's `theme` argument and add a headline with the `headline` argument.
 
 If you are familiar with ggplot2, you can add to or tweak the graph objects, such as changing the y axis to show as percents. 
 
