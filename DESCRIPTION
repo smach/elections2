@@ -28,5 +28,6 @@ Depends:
 Suggests: 
     plotly,
     gtools,
-    knitr
+    knitr,
+    testthat
 VignetteBuilder: knitr

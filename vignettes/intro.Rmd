@@ -20,23 +20,30 @@ library(elections2)
 
 This package wrangles election result data for elections where there are only two choices -- two candidates (which means ignoring third parties, write-ins, and blanks) or a yes-no ballot question.
 
-The package's main function, `wrangle_results()`, returns information for each row and total on the winner, percents, and percent and vote margins. It does not deal with turnout columns.
+The package's `wrangle_results()` function returns information for each row and total on the winner, percents, and percent and vote margins. There is a turnout_columns option to deal with, well, optional turnout columns.
+
+After running wrangle_results() on your data, you can use the resulting data frame in this package's visualization functions for creating tables, bar graphs, and maps.
 
 ## Data prep
 
-Import and wrangle election results from a CSV or Excel file with this package's `wrangle_results()` function. The election results file _must_ be in the following format 3-column format! Column 1 should be the election districts (such as precinct, city, county, etc.). Columns 2 and 3 should be the candidates' names, "Yes" and "No" for ballot questions, etc. The values should be _raw vote totals_ and not percents.
+Import and wrangle election results from a CSV or Excel file with this package's `wrangle_results()` function. If turnout_columns = FALSE, the election results file _must_ be in the following format 3-column format:
 
-Do _not_ include any column or row totals in the file! 
+<ul><li>Column 1 should be the election districts (such as precinct, city, county, etc.).</li><br />
+<li>Columns 2 and 3 should be the candidates' names, "Yes" and "No" for ballot questions, etc. The values should be _raw vote totals_ and not percents.</li></br />
+
+Do _not_ include any column or row totals in the file!
+
+If you want to include turnout data, set turnout_columns = TRUE and include total number of votes in column 4 and total number of registered voters in column 5. Don't include a column for turnout percent, as this will be calculated by wrangle_results().
 
 ```{r import_results}
-
+library(elections2)
 results_file <- system.file("extdata", "FakeElectionResults.xlsx", package = "elections2")
 
 my_election_results <- wrangle_results(results_file)
 
 ```
 
-You can save the wrangled election results data.table to its own variable from the my_election_results list, excluding the Total row for use in graphs and maps, with code such as:
+The resulting data.table will include a Total row for use in generating tables. To use the data in graphs and maps, delete the Total row with code such as:
 
 ```{r newobj}
 
@@ -53,6 +60,12 @@ head(my_election_data, n = 3)
 
 ```
 
-If you have turnout information, I suggest importing that separately and then joining that to the data.table created by `wrangle_results()`.
+## Visualizations
+
+**Interactive tables** Use the quick_table() AND OTHER? functions. See VIGNETTE TO COME for more.
+
+**Bar charts** Use the `bar_graph_of_winner_pct_margins()` function. See `vignette("barcharts", package = "elections2")` for more info.
+
+**Maps** See `vignette("maps", package = "elections2")`
 
 

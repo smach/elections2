@@ -42,15 +42,25 @@ wrangle_results <- function(election_results_file, turnout_columns = FALSE) {
 
   new_col_margin_name <- paste(paste(election_winner, "Margin", sep = "_")  )
 
+  # results[, (new_col_pct_name) := round(.SD[, ..election_winner] / Total, 3)]
+
   results[[new_col_pct_name]] <- round(results[[election_winner]] / results[["Total"]] , 3)
 
   loser_col_pct_name <- paste(election_loser, "Pct", sep = "_")
 
+ #  suppressWarnings(results[, (loser_col_pct_name) := round(.SD[, ..election_loser] / Total, 3)])
+
   results[[loser_col_pct_name]] <- round(results[[election_loser]] / results[["Total"]] , 3)
-  results[[new_col_margin_name]] <- results[[election_winner]] - results[[election_loser]]
+
+
+
 
   new_col_pct_margin_name <- paste(new_col_pct_name, "Margin", sep = "_")
   results[[new_col_pct_margin_name]] <- results[[new_col_pct_name]] - results[[loser_col_pct_name]]
+
+   results[[new_col_margin_name]] <- results[[election_winner]] - results[[ election_loser]]
+
+ # results[, Winner := factor(Winner, levels = c(election_winner, election_loser, "Tie", "Unknown"))]
 
   results$Winner <- factor(results$Winner, levels = c(election_winner, election_loser, "Tie", "Unknown"))
 
