@@ -18,9 +18,9 @@ quick_table(
 
 \item{pagination}{integer how many rows to display on each color}
 
-\item{win_color}{character string for color bar in winner's percent column, defaults to "#c2a5cf" (a light purple)}
+\item{win_color}{character string for color bar in winner's percent column, defaults to "#c2a5cf" (a light purple). Use "none" for no colored bar.}
 
-\item{lose_color}{character string for color bar in winner's percent column, defaults to "#a6dba0" (a light green)}
+\item{lose_color}{character string for color bar in winner's percent column, defaults to "#a6dba0" (a light green). Use "none" for no colored bar.}
 
 \item{use_regex_searching}{logical whether to allow searching by regular expression, defaults to TRUE}
 
