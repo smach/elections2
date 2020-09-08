@@ -31,3 +31,5 @@ Suggests:
     knitr,
     testthat
 VignetteBuilder: knitr
+URL: https://github.com/smach/elections2
+BugReports: https://github.com/smach/elections2/issues
