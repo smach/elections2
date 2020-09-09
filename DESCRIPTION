@@ -20,7 +20,8 @@ Imports:
     glue,
     htmltools,
     data.table (>= 1.13.0),
-    DT
+    DT,
+    dplyr
 Depends: 
     ggplot2,
     leaflet,

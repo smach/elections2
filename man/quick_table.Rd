@@ -34,5 +34,6 @@ Features colored bars in percent columns and allow for searching by regular expr
 }
 \examples{
 my_election_results <- wrangle_results(system.file("extdata", "FakeElectionResults.xlsx", package = "elections2"))
-quick_table(my_election_results, "Marcy")
+quick_table(my_election_results)
+quick_table(my_election_results, win_color = "none", lose_color = "none")
 }

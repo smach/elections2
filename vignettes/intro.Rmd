@@ -18,22 +18,28 @@ knitr::opts_chunk$set(
 library(elections2)
 ```
 
-This package wrangles election result data for elections where there are only two choices -- two candidates (which means ignoring third parties, write-ins, and blanks) or a yes-no ballot question.
+Easily analyze an election spreadsheet or CSV file with raw vote totals. One command calculates winners and percents for each district/city row in the data, as well as overall totals.
 
-The package's `wrangle_results()` function returns information for each row and total on the winner, percents, and percent and vote margins. There is a turnout_columns option to deal with, well, optional turnout columns.
+Then, take that result and turn it into interactive tables, bar charts, and maps with functions like bargraph_of_margins(), quick_table(), and map_election_results().
+
+## Data wrangling
+
+This package wrangles election result data for elections where there are only two choices -- two candidates (which means ignoring third parties, write-ins, and blanks) or a yes-no ballot question -- as well as cases where there are three or more options.
+
+### Data with only 2 choices
+
+The package's `wrangle_results()` function returns information for each row and total on the winner, percents, and percent and vote margins when there are only two choices in the election. The function includes a turnout_columns option if the data includes columns for vote totals and total registered voters.
 
 After running wrangle_results() on your data, you can use the resulting data frame in this package's visualization functions for creating tables, bar graphs, and maps.
 
-## Data prep
-
-Import and wrangle election results from a CSV or Excel file with this package's `wrangle_results()` function. If turnout_columns = FALSE, the election results file _must_ be in the following format 3-column format:
+If turnout_columns = FALSE, the election results file _must_ be in the following 3-column format:
 
 <ul><li>Column 1 should be the election districts (such as precinct, city, county, etc.).</li><br />
 <li>Columns 2 and 3 should be the candidates' names, "Yes" and "No" for ballot questions, etc. The values should be _raw vote totals_ and not percents.</li></br />
 
 Do _not_ include any column or row totals in the file!
 
-If you want to include turnout data, set turnout_columns = TRUE and include total number of votes in column 4 and total number of registered voters in column 5. Don't include a column for turnout percent, as this will be calculated by wrangle_results().
+If you want to include turnout data, set turnout_columns = TRUE and include total number of votes in column 4 and total number of registered voters in column 5. _Don't_ include a column for turnout percent, as this will be calculated by wrangle_results().
 
 ```{r import_results}
 library(elections2)
