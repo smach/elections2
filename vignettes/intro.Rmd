@@ -18,19 +18,25 @@ knitr::opts_chunk$set(
 library(elections2)
 ```
 
-Easily analyze an election spreadsheet or CSV file with raw vote totals. One command calculates winners and percents for each district/city row in the data, as well as overall totals.
+Easily analyze your election results data with the election2 package. One command calculates winners and percents for each election district row as well as overall totals.
 
-Then, take that result and turn it into interactive tables, bar charts, and maps with functions like bargraph_of_margins(), quick_table(), and map_election_results().
+Then, take those results and turn them into interactive tables, bar charts, and maps with functions like `bargraph_of_margins()`, `quick_table()`, and `map_election_results()`.
+
+election2 is designed for journalists, hobbyists, analysts, and data geeks who want to quickly go from a spreadsheet or CSV file with raw vote totals to visualizations that help you see trends behind the data.
 
 ## Data wrangling
 
-This package wrangles election result data for elections where there are only two choices -- two candidates (which means ignoring third parties, write-ins, and blanks) or a yes-no ballot question -- as well as cases where there are three or more options.
+Start with a function to wrangle a spreadsheet or CSV file with basic results. You've got two options: `wrangle_results()` to generate detailed results from a file with only two candidates or choices; and `wrangle_more_cols()` for results with more than two choices.
 
 ### Data with only 2 choices
 
-The package's `wrangle_results()` function returns information for each row and total on the winner, percents, and percent and vote margins when there are only two choices in the election. The function includes a turnout_columns option if the data includes columns for vote totals and total registered voters.
+`wrangle_results()` assumes you want to compare the performance of only two candidates (which means ignoring third parties, write-ins, and blanks) or a yes-no ballot question. 
 
-After running wrangle_results() on your data, you can use the resulting data frame in this package's visualization functions for creating tables, bar graphs, and maps.
+It returns information for each row and total on the winner, percents, and percent and vote margins when there are only two choices your election data. The function also includes a turnout_columns option if the data includes columns for vote totals and total registered voters in order to calculate turnout percentage.
+
+After running wrangle_results() on your data, you can use the resulting data frame in this package's visualization functions to create tables, bar graphs, and maps.
+
+#### Data format
 
 If turnout_columns = FALSE, the election results file _must_ be in the following 3-column format:
 
@@ -65,6 +71,17 @@ It will be in a format such as
 head(my_election_data, n = 3)
 
 ```
+
+### Data with 3 or more choices
+
+To analyze and visualize election results with three or more choices -- a crowded primary or a multi-party election, for example -- use the `wrangle_more_cols()` function. 
+
+The data spreadsheet or CSV should have the election district (precinct, city, etc.) in the first column. Vote totals (for candidates, parties, etc.) should be adjacent to each other with no columns in between. Don't include a total row or column, since those will be calculated.
+
+`wrangle_more_cols()` has three required arguments: the file name, the starting column with results, and the ending column with results. All three are character strings in quotation marks.
+
+The function also has three optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, and show_margins to display a column with the difference between the 1st- and 2nd-place finishers.
+
 
 ## Visualizations
 

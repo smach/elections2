@@ -4,14 +4,27 @@
 \alias{wrangle_more_cols}
 \title{Get winner for race with three or more candidates}
 \usage{
-wrangle_more_cols(election_results_file, start_col, end_col)
+wrangle_more_cols(
+  election_results_file,
+  start_col,
+  end_col,
+  show_pcts = FALSE,
+  show_runnerup = TRUE,
+  show_margin = TRUE
+)
 }
 \arguments{
-\item{election_results_file}{character string with name of Excel or CSV file. File must be in format with election district in column one, and candidate or option raw vote results in columns adjacent to each other.}
+\item{election_results_file}{character string with name of Excel or CSV file in format with election district in 1st col.}
 
 \item{start_col}{character string name of column starting the results}
 
-\item{end_col}{character string name of column ending the results}
+\item{end_col}{character string name of column ending the results. All result cols must be adjacent.}
+
+\item{show_pcts}{logical TRUE to display results as percents. Defaults to FALSE for vote totals.}
+
+\item{show_runnerup}{logical TRUE to show 2nd place finisher. Defaults to TRUE.}
+
+\item{show_margin}{logical TRUE to show margin between 1st and 2nd place. Deaflts to TRUE.}
 }
 \value{
 data frame with results, totals, and district winner by number of votes

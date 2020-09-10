@@ -18,10 +18,10 @@ test_that("wrangle_results works", {
   expect_equivalent(actual_results$Markey_Pct[actual_results$Precinct == "Total"], round(8542 / (8542 + 5668), 3) )
 
 
-  expect_equal(as.character(fake_results$Winner[fake_results$Precinct == "1"]), "Marcy" )
-  expect_equal(as.character(fake_results$Winner[fake_results$Precinct == "18"]), "Joe" )
+  expect_equal(as.character(fake_results$Winner[fake_results$Precinct == "1"]), "Yes" )
+  expect_equal(as.character(fake_results$Winner[fake_results$Precinct == "18"]), "No" )
   expect_equal(as.character(fake_results$Winner[fake_results$Precinct == "13"]), "Unknown" )
   expect_equal(as.character(fake_results$Winner[fake_results$Precinct == "14"]), "Tie" )
-  expect_equal(as.character(fake_results$Winner[fake_results$Precinct == "Total"]), "Marcy" )
+  expect_equal(as.character(fake_results$Winner[fake_results$Precinct == "Total"]), "Yes" )
 
 })

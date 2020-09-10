@@ -45,7 +45,7 @@ For a relatively small number of election districts, you can do a quick bar char
 
 ```{r graph1, warning=FALSE, message=FALSE, fig.width=7}
 
-bargraph_of_margins(election_df = my_election_data, Precinct, Marcy_Pct_Margin)
+bargraph_of_margins(election_df = my_election_data, Precinct, Yes_Pct_Margin)
 
 
 ```
@@ -91,7 +91,7 @@ If you are familiar with ggplot2, you can add to or tweak the graph objects, suc
 
 ```{r graph2, warning=FALSE, message=FALSE, fig.width=7}
 
-bargraph_of_margins(election_df = my_election_data, Precinct, Marcy_Pct_Margin, theme = theme_classic(), headline = "Marcy's Percentage Point Margin by Precinct") +
+bargraph_of_margins(election_df = my_election_data, Precinct, Yes_Pct_Margin, theme = theme_classic(), headline = "Yes Percentage Point Margin by Precinct") +
   scale_y_continuous(labels = scales::percent)
 
 
@@ -102,7 +102,7 @@ You can also use the same `bargraph_of_margins()` function to plot the margin of
 
 ```{r graph3, warning=FALSE, message=FALSE, fig.width=7}
 
-bargraph_of_margins(election_df = my_election_data, Precinct, Marcy_Margin, headline = "Marcy's Vote Margin of Victory (Purple) or Loss (Green) by Precinct") +
+bargraph_of_margins(election_df = my_election_data, Precinct, Yes_Margin, headline = "Yes Vote Margin of Victory (Purple) or Loss (Green) by Precinct") +
   scale_y_continuous(labels = scales::comma)
 
 ```
@@ -111,7 +111,7 @@ Sort the bars in descending order with the `order_bars_desc = TRUE` argument:
 
 ```{r message=FALSE, warning=FALSE, fig.width=7}
 
-bargraph_of_margins(my_election_data, Precinct, Marcy_Pct_Margin, order_bars_desc = TRUE)
+bargraph_of_margins(my_election_data, Precinct, Yes_Pct_Margin, order_bars_desc = TRUE)
 
 
 ```
@@ -121,7 +121,7 @@ You can turn any of these graphs into interactive HTML versions with the plotly 
 ```{r message=FALSE, warning=FALSE, fig.width=7}
 
 plotly::ggplotly(
-    bargraph_of_margins(my_election_data, Precinct, Marcy_Pct_Margin, theme = theme_classic()) +
+    bargraph_of_margins(my_election_data, Precinct, Yes_Pct_Margin, theme = theme_classic()) +
     scale_y_continuous(labels = scales::percent)
 )
 

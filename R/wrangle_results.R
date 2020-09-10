@@ -2,7 +2,11 @@
 
 #' Get election winner and loser by election district from spreadsheet or CSV file
 #'
-#' @param election_results_file Excel or CSV file of election results with only two candidates (or yes/no for ballot questions). If turnout_columns = FALSE, your spreadsheet should have only 3 required columns: Column 1 the precinct, city, county, state, or other election district; and columns 2 and 3 the candidate names (or yes and no, or any other two choices). Do NOT include any column or row totals. If turnout_columns = TRUE, include columns for total votes cast and total registered voters (but NOT turnout percent).
+#' @param election_results_file Excel or CSV file of election results with only two candidates (or yes/no for ballot questions).
+#' If turnout_columns = FALSE, your spreadsheet should have only 3 required columns:
+#' Column 1 the precinct, city, county, state, or other election district; and columns 2 and 3 the candidate names (or yes and no, or any other two choices).
+#' Do NOT include any column or row totals.
+#' If turnout_columns = TRUE, include columns for total votes cast and total registered voters (but NOT turnout percent).
 #' @param turnout_columns logical TRUE if spreadsheet includes columns for total votes cast and total registered voters. Defaults to FALSE.
 #' @return data.table with additional columns for total votes, winner, winner percent, loser's percent, winner's vote margin, and winner's percentage point margin.
 #' @export wrangle_results
