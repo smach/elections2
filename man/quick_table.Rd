@@ -30,10 +30,11 @@ quick_table(
 html widget with interactive table of results
 }
 \description{
-Features colored bars in percent columns and allow for searching by regular expression
+Features colored bars in percent columns and allows for searching by regular expression
 }
 \examples{
-my_election_results <- wrangle_results(system.file("extdata", "FakeElectionResults.xlsx", package = "elections2"))
+myfile <- system.file("extdata", "FakeElectionResults.xlsx", package = "elections2")
+my_election_results <- wrangle_results(myfile)
 quick_table(my_election_results)
 quick_table(my_election_results, win_color = "none", lose_color = "none")
 }

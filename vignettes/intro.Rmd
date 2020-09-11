@@ -51,17 +51,11 @@ If you want to include turnout data, set turnout_columns = TRUE and include tota
 library(elections2)
 results_file <- system.file("extdata", "FakeElectionResults.xlsx", package = "elections2")
 
-my_election_results <- wrangle_results(results_file)
+my_election_data <- wrangle_results(results_file)
 
 ```
 
-The resulting data.table will include a Total row for use in generating tables. To use the data in graphs and maps, delete the Total row with code such as:
-
-```{r newobj}
-
-my_election_data <- my_election_results[my_election_results[[1]] != "Total"]
-
-```
+The resulting data.table will include a Total row for use in generating tables. This package's dataviz functions will remove the Total row if it exists, as long as you keep the name as 'Total'
 
 Note that this result is a data.table, which is a special type of data frame with extra properties used by the data.table package. 
 
