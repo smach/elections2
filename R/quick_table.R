@@ -102,6 +102,7 @@ data.table::setDF(election_df)
 #'
 
 quick_table_w_bargraphs <- function(election_df, pagination = 20, win_color  = "#c2a5cf", lose_color = "#a6dba0") {
+
   col_with_winners_vote_total <- as.character(election_df$Winner[nrow(election_df)] )
   candidates <- names(election_df)[1:3]
   election_district_col_name <- candidates[1]
@@ -111,13 +112,17 @@ quick_table_w_bargraphs <- function(election_df, pagination = 20, win_color  = "
   win_pct_col_name <- paste0(col_with_winners_vote_total, "_Pct")
   lose_pct_col_name <- paste0(names(election_df)[3], "_Pct")
   margin_pct_col_name <- paste0(col_with_winners_vote_total, "_Pct_Margin")
+  margin_col_name <- paste0(col_with_winners_vote_total, "_Margin")
   data.table::setDT(election_df)
   names(election_df)[names(election_df) == margin_pct_col_name] <- "Winner_Pct_Margin"
+  names(election_df)[names(election_df) == margin_col_name] <- "Winner_Vote_Margin"
+
   election_df[, Winner := as.character(Winner)]
   # election_df <- election_df[!is.na(Winner_Pct_Margin)]
   election_df[, Winner_Pct_Margin := ifelse(is.na(Winner_Pct_Margin), 0, Winner_Pct_Margin)]
+  election_df[, Winner_Vote_Margin := ifelse(is.na(Winner_Vote_Margin), 0, Winner_Vote_Margin)]
 
-  # choose which columns to display and format based on n_turnout_cols
+
 
     display_cols <- 1:9
     comma_cols <- c(2,3,4,9)
@@ -148,10 +153,6 @@ quick_table_w_bargraphs <- function(election_df, pagination = 20, win_color  = "
     div(style = list(display = "flex"), neg_chart, pos_chart)
   }
 
-#  data <- data.frame(
-#    company = sprintf("Company%02d", 1:10),
-#    profit_chg = c(0.2, 0.685, 0.917, 0.284, 0.105, -0.701, -0.528, -0.808, -0.957, -0.11)
-#  )
 
   names(election_df) <- gsub("_", " ", names(election_df))
 
@@ -160,7 +161,8 @@ quick_table_w_bargraphs <- function(election_df, pagination = 20, win_color  = "
             defaultColDef = reactable::colDef(
             format = reactable::colFormat(separators = TRUE)
             ),
-            defaultPageSize = pagination, columns = list(
+            defaultPageSize = pagination,
+            columns = list(
     Winner = reactable::colDef(name = "Winner", minWidth = 100),
     `Winner Pct Margin` = reactable::colDef(
       defaultSortOrder = "desc",
@@ -170,7 +172,17 @@ quick_table_w_bargraphs <- function(election_df, pagination = 20, win_color  = "
       },
       align = "center",
       minWidth = 400
+    ),
+    `Winner Vote Margin` = reactable::colDef(
+      defaultSortOrder = "desc",
+      cell = function(value) {
+        label <- scales::comma(value)
+        bar_chart_pos_neg(label, value, max_value = max(abs(election_df$`Winner Vote Margin`[election_df[[1]] != "Total"])))
+      },
+      align = "center",
+      minWidth = 400
     )
+
   ))
 
 
