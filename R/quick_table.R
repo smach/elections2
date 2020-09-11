@@ -114,8 +114,8 @@ quick_table_w_bargraphs <- function(election_df, pagination = 20, win_color  = "
   data.table::setDT(election_df)
   names(election_df)[names(election_df) == margin_pct_col_name] <- "Winner_Pct_Margin"
   election_df[, Winner := as.character(Winner)]
-  election_df <- election_df[!is.na(Winner_Pct_Margin)]
-
+  # election_df <- election_df[!is.na(Winner_Pct_Margin)]
+  election_df[, Winner_Pct_Margin := ifelse(is.na(Winner_Pct_Margin), 0, Winner_Pct_Margin)]
 
   # choose which columns to display and format based on n_turnout_cols
 
@@ -155,14 +155,14 @@ quick_table_w_bargraphs <- function(election_df, pagination = 20, win_color  = "
 
   names(election_df) <- gsub("_", " ", names(election_df))
 
-  reactable(election_df, bordered = TRUE, searchable = TRUE,
+  reactable::reactable(election_df, bordered = TRUE, searchable = TRUE,
             showSortable = TRUE, showSortIcon = TRUE,
-            defaultColDef = colDef(
-            format = colFormat(separators = TRUE)
+            defaultColDef = reactable::colDef(
+            format = reactable::colFormat(separators = TRUE)
             ),
             defaultPageSize = pagination, columns = list(
-    Winner = colDef(name = "Winner", minWidth = 100),
-    `Winner Pct Margin` = colDef(
+    Winner = reactable::colDef(name = "Winner", minWidth = 100),
+    `Winner Pct Margin` = reactable::colDef(
       defaultSortOrder = "desc",
       cell = function(value) {
         label <- paste0(round(value * 100), "%")
