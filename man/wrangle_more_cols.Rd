@@ -6,8 +6,7 @@
 \usage{
 wrangle_more_cols(
   election_results_file,
-  start_col,
-  end_col,
+  votes_cols,
   show_pcts = FALSE,
   show_runnerup = TRUE,
   show_margin = TRUE
@@ -16,9 +15,7 @@ wrangle_more_cols(
 \arguments{
 \item{election_results_file}{character string with name of Excel or CSV file in format with election district in 1st col.}
 
-\item{start_col}{character string name of column starting the results}
-
-\item{end_col}{character string name of column ending the results. All result cols must be adjacent.}
+\item{votes_cols}{vector of character strings with names of columns containing votes}
 
 \item{show_pcts}{logical TRUE to display results as percents. Defaults to FALSE for vote totals.}
 
@@ -27,7 +24,7 @@ wrangle_more_cols(
 \item{show_margin}{logical TRUE to show margin between 1st and 2nd place. Deaflts to TRUE.}
 }
 \value{
-data frame with results, totals, and district winner by number of votes
+data table with results, totals, and district winner by number of votes
 }
 \description{
 Get winner for race with three or more candidates
