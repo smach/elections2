@@ -70,9 +70,9 @@ head(my_election_data, n = 3)
 
 To analyze and visualize election results with three or more choices -- a crowded primary or a multi-party election, for example -- use the `wrangle_more_cols()` function. 
 
-The data spreadsheet or CSV should have the election district (precinct, city, etc.) in the first column. Vote totals (for candidates, parties, etc.) should be adjacent to each other with no columns in between. Don't include a total row or column, since those will be calculated.
+The data spreadsheet or CSV should have the election district (precinct, city, etc.) in the first column. Vote totals (for candidates, parties, etc.) should be one column for each option. Don't include a total row or column, since those will be calculated.
 
-`wrangle_more_cols()` has three required arguments: the file name, the starting column with results, and the ending column with results. All three are character strings in quotation marks.
+`wrangle_more_cols()` has two required arguments: the file name and a vector of character strings with all the vote columns by candidate/party/option. the starting column with results, and the ending column with results. 
 
 The function also has three optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, and show_margins to display a column with the difference between the 1st- and 2nd-place finishers.
 

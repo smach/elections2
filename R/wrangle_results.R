@@ -64,8 +64,6 @@ wrangle_results <- function(election_results_file, turnout_columns = FALSE) {
 
    results[[new_col_margin_name]] <- results[[election_winner]] - results[[ election_loser]]
 
- # results[, Winner := factor(Winner, levels = c(election_winner, election_loser, "Tie", "Unknown"))]
-
   results$Winner <- factor(results$Winner, levels = c(election_winner, election_loser, "Tie", "Unknown"))
 
 if (turnout_columns) {

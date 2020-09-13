@@ -29,7 +29,7 @@ my_election_data <- wrangle_results(results_file)
 
 ```
 
-The resulting data frame will include a Total row, which you wouldn't want in a bar graph, but bargraph_of_margins() will remove it as long as it's still called Total in the first column.
+The resulting data frame will include a Total row, which you wouldn't want in a bar graph, but bargraph_of_margins() removes it as long as it's still called Total in the first column.
 
 I find it useful to decide my color scheme at the outset. In the U.S., Democrats as blue and Republicans as red is a well-known convention -- and worth avoiding in the U.S. for other types of elections such as primaries or ballot questions.
 

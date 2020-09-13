@@ -63,19 +63,31 @@ wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FAL
 
     percent_results <- dplyr::select(vote_results, -Margin, -Total) %>%
   #    dplyr::ungroup() %>%
-      janitor::adorn_percentages() %>%
-      janitor::adorn_rounding(3)
+      janitor::adorn_percentages(na.rm = TRUE) %>%
+      janitor::adorn_rounding(3) %>%
+      data.table::as.data.table()
+
+    percent_results[, Margin := 0]
 
       if(show_margin) {
-      percent_results <- percent_results %>%
-        dplyr::rowwise(1) %>%
-      dplyr::mutate(
-        Percents = list(sort(dplyr::c_across({{votes_cols}}), decreasing = TRUE)),
-        Margin = Percents[1] - Percents[2]
-      ) %>%
-      dplyr::select(-Percents) %>%
-      dplyr::ungroup() %>%
-        data.table::as.data.table()
+        for(i in 1:nrow(percent_results)) {
+        sorted_margins <- sort(percent_results[i, ..votes_cols], decreasing = TRUE) %>% unlist() %>% unname()
+        if(!is.null(sorted_margins)) {
+        percent_results$Margin[i] <- sorted_margins[1] - sorted_margins[2]
+        } else {
+          percent_results$Margin[i] <- NA
+        }
+        }
+        # dplyr way:
+       #  percent_results <- percent_results %>%
+      #  dplyr::rowwise(1) %>%
+    #  dplyr::mutate(
+    #    Percents = list(sort(dplyr::c_across({{votes_cols}}), decreasing = TRUE)),
+    #    Margin = Percents[1] - Percents[2]
+   #   ) %>%
+  #    dplyr::select(-Percents) %>%
+  #    dplyr::ungroup()
+
 }
 
 

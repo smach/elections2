@@ -1,0 +1,51 @@
+---
+title: "Tables"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(elections2)
+```
+
+This package has a couple of convenience functions to quickly make interactive HTML tables from election results. `quick_table()` takes the results of running `wrangle_results()` and turns it into table using the DT package. This table features colored bars in the winner and loser percent columns, as well as the ability to search by regular expressions. 
+
+The bar colors are set with the win_color and lose_color arguments, which default to purple and green:
+
+```{r}
+myfile <- system.file("extdata", "FakeElectionResults.xlsx", package = "elections2")
+my_election_results <- wrangle_results(myfile)
+quick_table(my_election_results, pagination = 5)
+
+
+```
+
+Turn off the bar colors by setting win_color and lose_color both to "none":
+
+```{r}
+quick_table(my_election_results, win_color = "none", lose_color = "none", pagination = 5)
+```
+
+Note I'm setting pagination to 5 to save space. It defaults to 20.
+
+The quick_table_w_bargraphs() function uses the reactable package to create a bargraphs in the far right percent margin and vote margin columns. The winner and loser columns also default to purple and green, but you can set them when you call the function.
+
+```{r}
+quick_table_w_bargraphs(my_election_results, pagination = 5)
+```
+
+
+
+
+
+
