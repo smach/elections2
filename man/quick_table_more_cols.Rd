@@ -7,8 +7,10 @@
 quick_table_more_cols(
   election_df,
   graph_cols,
-  num_format = "pct",
-  pagination = 20
+  show_pcts = FALSE,
+  pagination = 20,
+  show_sparklines = TRUE,
+  use_regex_searching = TRUE
 )
 }
 \arguments{
@@ -16,9 +18,11 @@ quick_table_more_cols(
 
 \item{graph_cols}{vector of character strings with names of columns containing vote or percent results}
 
-\item{num_format}{character string either "pct" or "votes" - whether election_df contains vote totals or percents}
+\item{show_pcts}{logical whether election_df data is showing percents as opposed to vote totals. Defaults to FALSE.}
 
 \item{pagination}{integer number of rows to display per page, defaults to 20}
+
+\item{show_sparklines}{logical if you want table to include a column with mini bar charts. Defaults to TRUE.}
 }
 \value{
 
@@ -28,6 +32,6 @@ Generate table of results with more than 2 columns, including sparkline bar grap
 }
 \examples{
 myfile <- system.file("extdata", "Fake3Columns.xlsx", package = "elections2")
-mydt <- wrangle_more_cols(myfile, c("Red", "Blue", "Orange", "Green", "Purple"))
-quick_table_more_cols(mydt, c("Red", "Blue", "Orange", "Green", "Purple"))
+mydata <- wrangle_more_cols(myfile, c("Red", "Blue", "Orange", "Green", "Purple"), show_pcts = TRUE)
+quick_table_more_cols(mydata, c("Red", "Blue", "Orange", "Green", "Purple"), show_pcts = TRUE)
 }
