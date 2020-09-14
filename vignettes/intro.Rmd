@@ -55,9 +55,7 @@ my_election_data <- wrangle_results(results_file)
 
 ```
 
-The resulting data.table will include a Total row for use in generating tables. This package's dataviz functions will remove the Total row if it exists, as long as you keep the name as 'Total'
-
-Note that this result is a data.table, which is a special type of data frame with extra properties used by the data.table package. 
+The resulting data frame will include a Total row for use in generating tables. This package's dataviz functions will remove the Total row if it exists, as long as you keep the name as 'Total'.
 
 It will be in a format such as
 
@@ -75,7 +73,6 @@ The data spreadsheet or CSV should have the election district (precinct, city, e
 `wrangle_more_cols()` has two required arguments: the file name and a vector of character strings with all the vote columns by candidate/party/option. the starting column with results, and the ending column with results. 
 
 The function also has three optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, and show_margins to display a column with the difference between the 1st- and 2nd-place finishers.
-
 
 ## Visualizations
 

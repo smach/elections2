@@ -21,7 +21,8 @@ Imports:
     htmltools,
     data.table (>= 1.13.0),
     DT,
-    dplyr
+    dplyr,
+    sparkline
 Depends: 
     ggplot2,
     leaflet,

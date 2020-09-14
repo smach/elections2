@@ -10,11 +10,14 @@
 #' @export wrangle_more_cols
 
 wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FALSE, show_runnerup = TRUE, show_margin = TRUE) {
-  results_all <- rio::import(election_results_file) %>%
-    na2zero2()
-  vote_results <- data.table::as.data.table(results_all)
-  col_nums <- match(votes_cols, names(vote_results) )
-  vote_results <- janitor::adorn_totals(vote_results, "row") %>% data.table::as.data.table()
+  results_all <- rio::import(election_results_file)
+  results_all <- na2zero2(results_all)
+  district_col <- names(results_all)[1]
+  results_all <- results_all[, c(district_col, votes_cols)]
+  col_nums <- match(votes_cols, names(results_all) )
+  vote_results <- janitor::adorn_totals(results_all, "row")
+  data.table::setDT(vote_results)
+
   vote_results[, Total := sum(.SD, na.rm = TRUE), by = 1:nrow(vote_results), .SDcols = votes_cols]
   vote_results[, Winner := ""][, RunnerUp := ""][, Margin := 0]
 
@@ -56,7 +59,7 @@ wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FAL
     if(!show_margin) {
       vote_results$Margin <- NULL
     }
-   return(vote_results)
+   return(data.table::setDF(vote_results))
   } else {
 
 
@@ -91,7 +94,7 @@ wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FAL
 }
 
 
-    return(percent_results)
+    return(data.table::setDF(percent_results))
   }
 
 

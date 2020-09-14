@@ -16,7 +16,7 @@ If turnout_columns = TRUE, include columns for total votes cast and total regist
 \item{turnout_columns}{logical TRUE if spreadsheet includes columns for total votes cast and total registered voters. Defaults to FALSE.}
 }
 \value{
-data.table with additional columns for total votes, winner, winner percent, loser's percent, winner's vote margin, and winner's percentage point margin.
+data frame with additional columns for total votes, winner, winner percent, loser's percent, winner's vote margin, and winner's percentage point margin.
 }
 \description{
 Get election winner and loser by election district from spreadsheet or CSV file

@@ -8,7 +8,7 @@
 #' Do NOT include any column or row totals.
 #' If turnout_columns = TRUE, include columns for total votes cast and total registered voters (but NOT turnout percent).
 #' @param turnout_columns logical TRUE if spreadsheet includes columns for total votes cast and total registered voters. Defaults to FALSE.
-#' @return data.table with additional columns for total votes, winner, winner percent, loser's percent, winner's vote margin, and winner's percentage point margin.
+#' @return data frame with additional columns for total votes, winner, winner percent, loser's percent, winner's vote margin, and winner's percentage point margin.
 #' @export wrangle_results
 #' @importFrom data.table ":="
 #' @import data.table
@@ -73,7 +73,7 @@ if (turnout_columns) {
   results_optional$TurnoutPct <- round( (results_optional[[1]] / results_optional[[2]]), 3)
   results <- cbind(results, results_optional)
 }
-  return(results)
+  return(data.table::setDF(results))
 }
 
 

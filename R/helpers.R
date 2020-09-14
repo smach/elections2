@@ -15,6 +15,6 @@ na2zero2 <- function(mydf) {
       }
     }
   }
-return(data.table::setDT(mydf))
+return(mydf)
 
 }

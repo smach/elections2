@@ -28,6 +28,7 @@
 
 bargraph_of_margins <- function(election_df, district_col, margin_col, headline = "", palette = c("#9970ab", "#5aae61", "#f7f7f7"), brewer_palette = FALSE, winner_col = Winner, theme = theme_minimal(), order_bars_desc = FALSE ) {
 
+
  if(order_bars_desc) {
    district_col_name <- deparse(substitute(district_col))
    election_df[[district_col_name]] <- as.character(election_df[[district_col_name]])

@@ -79,7 +79,7 @@ my_election_data[, Precinct := factor(Precinct, levels = gtools::mixedsort(Preci
 ```
 
 
-You can  change the ggplot2 theme with the `bargraph_of_margin()` function's `theme` argument and add a headline with the `headline` argument.
+You can change the ggplot2 theme with the `bargraph_of_margin()` function's `theme` argument and add a headline with the `headline` argument.
 
 If you are familiar with ggplot2, you can add to or tweak the graph object with conventional ggplot2 code as well using arguments available within the bargraph_of_margin() funct. For example, you can change the y axis to show as percents with:
 
