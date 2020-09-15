@@ -9,7 +9,8 @@ wrangle_more_cols(
   votes_cols,
   show_pcts = FALSE,
   show_runnerup = TRUE,
-  show_margin = TRUE
+  show_margin = TRUE,
+  show_margin_2vs3 = FALSE
 )
 }
 \arguments{
@@ -21,7 +22,9 @@ wrangle_more_cols(
 
 \item{show_runnerup}{logical TRUE to show 2nd place finisher. Defaults to TRUE.}
 
-\item{show_margin}{logical TRUE to show margin between 1st and 2nd place. Deaflts to TRUE.}
+\item{show_margin}{logical TRUE to show margin between 1st and 2nd place. Defaults to TRUE.}
+
+\item{show_margin_2vs3}{logical TRUE to show margin between 2nd and 3rd place. Defaults to FALSE}
 }
 \value{
 data table with results, totals, and district winner by number of votes

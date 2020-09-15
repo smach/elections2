@@ -72,7 +72,7 @@ The data spreadsheet or CSV should have the election district (precinct, city, e
 
 `wrangle_more_cols()` has two required arguments: the file name and a vector of character strings with all the vote columns by candidate/party/option. the starting column with results, and the ending column with results. 
 
-The function also has three optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, and show_margins to display a column with the difference between the 1st- and 2nd-place finishers.
+The function also has four optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, show_margin to display a column with the difference between the 1st- and 2nd-place finishers, and show_margin_2vs3 to show the difference between the 2nd- and 3rd-place finishers.
 
 ## Visualizations
 

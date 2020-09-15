@@ -4,12 +4,13 @@
 #' @param votes_cols vector of character strings with names of columns containing votes
 #' @param show_pcts logical TRUE to display results as percents. Defaults to FALSE for vote totals.
 #' @param show_runnerup logical TRUE to show 2nd place finisher. Defaults to TRUE.
-#' @param show_margin logical TRUE to show margin between 1st and 2nd place. Deaflts to TRUE.
+#' @param show_margin logical TRUE to show margin between 1st and 2nd place. Defaults to TRUE.
+#' @param show_margin_2vs3 logical TRUE to show margin between 2nd and 3rd place. Defaults to FALSE
 #'
 #' @return data table with results, totals, and district winner by number of votes
 #' @export wrangle_more_cols
 
-wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FALSE, show_runnerup = TRUE, show_margin = TRUE) {
+wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FALSE, show_runnerup = TRUE, show_margin = TRUE, show_margin_2vs3 = FALSE) {
   results_all <- rio::import(election_results_file)
   results_all <- na2zero2(results_all)
   district_col <- names(results_all)[1]
@@ -20,7 +21,9 @@ wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FAL
 
   vote_results[, Total := sum(.SD, na.rm = TRUE), by = 1:nrow(vote_results), .SDcols = votes_cols]
   vote_results[, Winner := ""][, RunnerUp := ""][, Margin := 0]
-
+  if(show_margin_2vs3) {
+    vote_results[, MarginRunnerUp := 0]
+  }
 
   for(i in 1:nrow(vote_results)){
     ranks <- vote_results[i, ..votes_cols] %>% unlist() %>% rank()
@@ -41,10 +44,15 @@ wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FAL
 
 
 
-    sorted_votes <- sort(vote_results[i, ..votes_cols], decreasing = TRUE) %>% unlist() %>% unname()
+    sorted_votes <- sort(vote_results[i, ..votes_cols], decreasing = TRUE) %>% unlist()
 
 
     vote_results$Margin[i] <- sorted_votes[1] - sorted_votes[2]
+
+
+    if(show_margin_2vs3) {
+      vote_results$MarginRunnerUp[i] <- sorted_votes[2] - sorted_votes[3]
+    }
 
   }
 
@@ -59,11 +67,16 @@ wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FAL
     if(!show_margin) {
       vote_results$Margin <- NULL
     }
+    if(!show_margin_2vs3 & "MarginRunnerUp" %in% names(vote_results)) {
+      vote_results$MarginRunnerUp <- NULL
+    }
    return(data.table::setDF(vote_results))
   } else {
 
 
-
+    if("MarginRunnerUp" %in% names(vote_results)) {
+      vote_results$MarginRunnerUp <- NULL
+    }
     percent_results <- dplyr::select(vote_results, -Margin, -Total) %>%
   #    dplyr::ungroup() %>%
       janitor::adorn_percentages(na.rm = TRUE) %>%
@@ -71,14 +84,23 @@ wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FAL
       data.table::as.data.table()
 
     percent_results[, Margin := 0]
+    if(show_margin_2vs3) {
+    percent_results[, MarginRunnerUp := 0]
+    }
 
       if(show_margin) {
         for(i in 1:nrow(percent_results)) {
         sorted_margins <- sort(percent_results[i, ..votes_cols], decreasing = TRUE) %>% unlist() %>% unname()
         if(!is.null(sorted_margins)) {
         percent_results$Margin[i] <- sorted_margins[1] - sorted_margins[2]
+        if(show_margin_2vs3) {
+          percent_results$MarginRunnerUp[i] <- sorted_margins[2] - sorted_margins[3]
+        }
         } else {
           percent_results$Margin[i] <- NA
+          if(show_margin_2vs3) {
+          percent_results$MarginRunnerUp[i] <- NA
+          }
         }
         }
         # dplyr way:
