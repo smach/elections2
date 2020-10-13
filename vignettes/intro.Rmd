@@ -24,6 +24,9 @@ Then, take those results and turn them into interactive tables, bar charts, and 
 
 election2 is designed for journalists, hobbyists, analysts, and data geeks who want to quickly go from a spreadsheet or CSV file with raw vote totals to visualizations that help you see trends behind the data.
 
+Note: This package is not on CRAN, so you need to install it from GitHub with the R package and function of your choice, such as `remotes::install_github("smach/elections2")`
+
+
 ## Data wrangling
 
 Start with a function to wrangle a spreadsheet or CSV file with basic results. You've got two options: `wrangle_results()` to generate detailed results from a file with only two candidates or choices; and `wrangle_more_cols()` for results with more than two choices.
