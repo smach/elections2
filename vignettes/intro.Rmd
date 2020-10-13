@@ -76,10 +76,14 @@ The function also has four optional logical arguments: show_pcts to return resul
 
 ## Visualizations
 
-**Interactive tables** Use the quick_table() AND OTHER? functions. See VIGNETTE TO COME for more.
+**Interactive tables** Use the `quick_table()` or `quick_table_more_cols()` functions. See the tables vignette with `vignette("tables", package = "elections2")` for more.
 
-**Bar charts** Use the `bar_graph_of_winner_pct_margins()` function. See `vignette("barcharts", package = "elections2")` for more info.
+**Bar charts** Use the `bar_graph_of_winner_pct_margins()` function. See the barcharts vignette with `vignette("barcharts", package = "elections2")` for more info.
 
-**Maps** See `vignette("maps", package = "elections2")`
+**Election results maps** See the maps vignette: `vignette("maps", package = "elections2")
+
+**Turnout maps** See the turnout maps vignette: `vignette("map_turnout", package = "elections2")
+
+
 
 

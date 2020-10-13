@@ -1,0 +1,63 @@
+---
+title: "Mapping Turnout"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{turnout}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(elections2)
+```
+
+This convenience function lets you quickly generate an interactive Leaflet map of turnout by election district. To use it, you need a data frame with election district names and turnout data joined with a shapefile of those election districts.
+
+Here's an example with turnout for a local election in Framingham, Massachusetts 
+
+For the turnout data, I'll use the spreadsheet included with this package, CharterResults.xlsx, and the tab named "Turnout"; for the shapefile, the included framingham.shp file in the FraminghamDistrictsAndPrecincts2018 subdirectory:
+
+```{r}
+results_file <- system.file("extdata", "CharterResults.xlsx", package = "elections2")
+my_shapefile <- system.file("extdata", "FraminghamDistrictsAndPrecincts2018/framingham.shp", package = "elections2")
+
+turnout <- rio::import(results_file, sheet = "Turnout")
+geometry <- sf::st_read(my_shapefile, quiet = TRUE)
+
+dplyr::glimpse(turnout)
+dplyr::glimpse(geometry)
+
+```
+
+To make the results precinct names match the shapefile precinct names, I'll change the shapefile precinct column to remove the "P" and convert the turnout Precinct column to characters. Then, I'll use a dplyr `antijoin()` to see if any results don't match:
+
+```{r}
+geometry$precinct <- gsub("P", "", geometry$precinct)
+turnout$Precinct <- as.character(turnout$Precinct)
+
+dplyr::anti_join(turnout, geometry, by = c("Precinct" = "precinct"))
+```
+
+Great, now I'm ready to join the two files with base R's merge() function:
+
+```{r}
+map_data <- merge(geometry, turnout, by.x = "precinct", by.y = "Precinct", all.x = TRUE)
+```
+
+Now that the data is prepared, it's ready for the map_turnout() function. The sf object data frame is the first argument, name of the turnout percent column ("Turnout") is the second argument, and name of the election district column ("precinct") is the third argument:
+
+```{r}
+map_turnout(map_data, "Turnout", "precinct")
+```
+
+For info on mapping election turnout, see the maps vignette and the `map_election_results()` and `map_election_results_2layers()` functions.
+
+
+

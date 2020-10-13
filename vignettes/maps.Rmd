@@ -95,7 +95,7 @@ names(election_results_for_map)[1] <- "Precinct"
 ```
 
 
-Now I can use the map_election_results() function. Note that I need to specify the names of the winner column and loser colum in the win_col and lose_col arguments.
+Now I can use the map_election_results() function. Note that I need to specify the names of the winner column and loser column in the win_col and lose_col arguments.
 
 ```{r map1, fig.width=7, fig.height=7}
 
@@ -104,6 +104,78 @@ map_election_results(election_results_for_map, win_col = "Yes_Pct", lose_col = "
 ```
 
 
+### Example 2 - Cities and Towns Statewide
+
+This next example will look at results by city/town in Massachusetts for the ballot question legalizing recreational marijuana use.
+
+Import results:
+
+```{r}
+results_file2 <- system.file("extdata", "2016_Statewide_Question_4_marijuana.csv", package = "elections2")
+
+my_election_data2 <- wrangle_results(results_file2)
+
+
+```
+
+For this CSV file from the Secretary of State's office, I removed the commas from the numerical columns and also deleted columns for blanks and totals, since I just want to see Yes vs No.
+
+```{r}
+head(my_election_data2)
+```
+
+Next I need a shapefile for Massachusetts cities and towns, which I found on the [Massachusetts GIS website](https://docs.digital.mass.gov/dataset/massgis-data-community-boundaries-towns-survey-points). I already imported it into R, turned the place names to Title Case, and re-projected it so it matches the underlying Leaflet basemap. It is included in this package as the R sf object `mass_gis`.
+
+However, I still need to make sure that names of communities in the _election results data_ match those in the _GIS data_. dplyr's `anti_join()` will show me which items in my_election_data2 don't have a match:
+
+```{r}
+
+dplyr::anti_join(my_election_data2, mass_gis, by = c("Locality" = "Place"))
+
+```
+
+Looks like I need to spell out North, South, East, and West:
+
+```{r}
+my_election_data2 <- my_election_data2 %>%
+  dplyr::mutate(
+    Locality = stringr::str_replace(Locality, "N\\.", "North"),
+    Locality = stringr::str_replace(Locality, "S\\.", "South"),
+    Locality = stringr::str_replace(Locality, "E\\.", "East"),
+    Locality = stringr::str_replace(Locality, "W\\.", "West"),
+  )
+
+dplyr::anti_join(my_election_data2, mass_gis, by = c("Locality" = "Place"))
+
+
+```
+
+I'll deal with these last two:
+
+```{r}
+my_election_data2 <- my_election_data2 %>%
+  dplyr::mutate(
+    Locality = stringr::str_replace(Locality, "Manchester-by-the-Sea", "Manchester")
+  ) %>%
+  dplyr::filter(Locality != "Total")
 
 
 
+```
+
+You'll almost always need to do fiddling like this to match your place names in election data with place names in maps.
+
+Now to join election results with the shapefile:
+
+```{r}
+marijuana_results_for_map <- merge(mass_gis, my_election_data2, by.x = "Place", by.y = "Locality") 
+```
+
+And, finally, this package's 
+
+
+```{r warning=FALSE, message=FALSE}
+map_election_results(marijuana_results_for_map, win_col = "Yes_Pct", lose_col = "No_Pct", election_district_col = "Place", "Greens", "Purples")
+```
+
+For mapping turnout, see the `map_turnout()` function and the Mapping Turnout vignette.
