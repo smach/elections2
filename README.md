@@ -10,28 +10,31 @@ Note: This package is not on CRAN, so you need to install it from GitHub with th
 
 `devtools::install_github("smach/elections2", build_vignettes = TRUE)`
 
+
 ## Data wrangling
 
-Start with a function to wrangle a spreadsheet or CSV file with basic results. You've got two options: `wrangle_results()` to generate detailed results from a file with only two candidates or choices; and `wrangle_more_cols()` for results with more than two choices.
+To use elections2 for your elections data, start with one of the package functions that wrangle a spreadsheet or CSV file with election results. You've got two options: `wrangle_results()` to generate detailed results from a file _with only two candidates or choices;_ and `wrangle_more_cols()` for results with _more than two choices._
 
 ### Data with only 2 choices
 
-`wrangle_results()` assumes you want to compare the performance of only two candidates (which means ignoring third parties, write-ins, and blanks) or a yes-no ballot question. 
+`wrangle_results()` is for when you want to compare the performance of only two candidates or a yes-no ballot question. That means you don't wish to include additional results such as third parties, write-ins, or blanks.
 
-It returns information for each row and total on the winner, percents, and percent and vote margins when there are only two choices your election data. The function also includes a turnout_columns option if the data includes columns for vote totals and total registered voters in order to calculate turnout percentage.
+The function returns winner, percents, and percent and vote margins  for each row as well as an overall total. The function also has a turnout_columns option if your data includes columns for vote totals and total registered voters and you'd like to calculate turnout percentage.
 
-After running wrangle_results() on your data, you can use the resulting data frame in this package's visualization functions to create tables, bar graphs, and maps.
+After running `wrangle_results()` on your data, you can use this package's visualization functions on the results to create tables, bar graphs, and maps.
 
 #### Data format
 
-If turnout_columns = FALSE, the election results file _must_ be in the following 3-column format:
+`wrangle_results()` needs your data to be in a very specific format.
+
+If your CSV file or spreadsheet doesn't include turnout data, that election results file _must_ be in the following 3-column format:
 
 <ul><li>Column 1 should be the election districts (such as precinct, city, county, etc.).</li><br />
 <li>Columns 2 and 3 should be the candidates' names, "Yes" and "No" for ballot questions, etc. The values should be _raw vote totals_ and not percents.</li></br />
 
 Do _not_ include any column or row totals in the file!
 
-If you want to include turnout data, set turnout_columns = TRUE and include total number of votes in column 4 and total number of registered voters in column 5. _Don't_ include a column for turnout percent, as this will be calculated by wrangle_results().
+If your data _does_ have turnout information, set turnout_columns = TRUE as an argument in `wrangle_results()`. Your data needs to have total number of votes in column 4 and total number of registered voters in column 5. _Don't_ include a column for turnout percent, as this will be calculated by `wrangle_results()`.
 
 ```{r import_results}
 library(elections2)
@@ -41,24 +44,39 @@ my_election_data <- wrangle_results(results_file)
 
 ```
 
-The resulting data frame will include a Total row for use in generating tables. This package's dataviz functions will remove the Total row if it exists, as long as you keep the name as 'Total'.
 
-It will be in a format such as
+The result of `wrangle_results()` will be in a format such as:
 
 ```{r viewdata }
 head(my_election_data, n = 3)
 
 ```
 
+It includes a Total row. 
+
 ### Data with 3 or more choices
 
 To analyze and visualize election results with three or more choices -- a crowded primary or a multi-party election, for example -- use the `wrangle_more_cols()` function. 
 
-The data spreadsheet or CSV should have the election district (precinct, city, etc.) in the first column. Vote totals (for candidates, parties, etc.) should be one column for each option. Don't include a total row or column, since those will be calculated.
+For this function, your results spreadsheet or CSV should have the election district (precinct, city, etc.) in the first column. Vote totals (for candidates, parties, etc.) should be in a format with one column for each candidate Don't include a total row or column, since those will be calculated.
 
-`wrangle_more_cols()` has two required arguments: the file name and a vector of character strings with all the vote columns by candidate/party/option. the starting column with results, and the ending column with results. 
+`wrangle_more_cols()` has two required arguments: the file name and a vector of character strings with all the vote columns by candidate/party/option. 
 
-The function also has four optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, show_margin to display a column with the difference between the 1st- and 2nd-place finishers, and show_margin_2vs3 to show the difference between the 2nd- and 3rd-place finishers.
+The function also has four optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, show_margin to display a column with the difference between the 1st- and 2nd-place finishers, and show_margin_2vs3 to show the difference between the 2nd- and 3rd-place finishers. 
+
+In the example below, I have a file of fake results for the "Red", "Blue", and "Green" parties. I'd like to show results as percents, and I don't want a column for the runner up:
+
+```{r}
+myfile <- system.file("extdata", "Fake3Columns.xlsx", package = "elections2")
+
+mydata <- wrangle_more_cols(myfile, c("Red", "Blue", "Green"), show_pcts = TRUE, show_runnerup = FALSE)
+
+head(mydata)
+
+```
+
+`wrangle_more_cols()` has four optional arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, show_margin to display a column with the difference between the 1st- and 2nd-place finishers, and show_margin_2vs3 to show the difference between the 2nd- and 3rd-place finishers. 
+
 
 ## Visualizations
 

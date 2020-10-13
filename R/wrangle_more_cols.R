@@ -9,6 +9,9 @@
 #'
 #' @return data table with results, totals, and district winner by number of votes
 #' @export wrangle_more_cols
+#' @examples
+#' myfile <- system.file("extdata", "Fake3Columns.xlsx", package = "elections2")
+#' mydata <- wrangle_more_cols(myfile, c("Red", "Blue", "Green"), show_pcts = TRUE, show_runnerup = FALSE)
 
 wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FALSE, show_runnerup = TRUE, show_margin = TRUE, show_margin_2vs3 = FALSE) {
   results_all <- rio::import(election_results_file)

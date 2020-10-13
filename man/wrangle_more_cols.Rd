@@ -32,3 +32,7 @@ data table with results, totals, and district winner by number of votes
 \description{
 Get winner for race with three or more candidates
 }
+\examples{
+myfile <- system.file("extdata", "Fake3Columns.xlsx", package = "elections2")
+mydata <- wrangle_more_cols(myfile, c("Red", "Blue", "Green"), show_pcts = TRUE, show_runnerup = FALSE)
+}

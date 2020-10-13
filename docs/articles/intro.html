@@ -68,9 +68,6 @@
     <li>
       <a href="../articles/turnout.html">Mapping Turnout</a>
     </li>
-    <li>
-      <a href="../articles/wrangle-results.html">Wrangle Results</a>
-    </li>
   </ul>
 </li>
       </ul>
@@ -116,17 +113,18 @@
 <div id="data-wrangling" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-wrangling" class="anchor"></a>Data wrangling</h2>
-<p>Start with a function to wrangle a spreadsheet or CSV file with basic results. You’ve got two options: <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> to generate detailed results from a file with only two candidates or choices; and <code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> for results with more than two choices.</p>
+<p>To use elections2 for your elections data, start with one of the package functions that wrangle a spreadsheet or CSV file with election results. You’ve got two options: <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> to generate detailed results from a file <em>with only two candidates or choices;</em> and <code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> for results with <em>more than two choices.</em></p>
 <div id="data-with-only-2-choices" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-with-only-2-choices" class="anchor"></a>Data with only 2 choices</h3>
-<p><code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> assumes you want to compare the performance of only two candidates (which means ignoring third parties, write-ins, and blanks) or a yes-no ballot question.</p>
-<p>It returns information for each row and total on the winner, percents, and percent and vote margins when there are only two choices your election data. The function also includes a turnout_columns option if the data includes columns for vote totals and total registered voters in order to calculate turnout percentage.</p>
-<p>After running wrangle_results() on your data, you can use the resulting data frame in this package’s visualization functions to create tables, bar graphs, and maps.</p>
+<p><code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> is for when you want to compare the performance of only two candidates or a yes-no ballot question. That means you don’t wish to include additional results such as third parties, write-ins, or blanks.</p>
+<p>The function returns winner, percents, and percent and vote margins for each row as well as an overall total. The function also has a turnout_columns option if your data includes columns for vote totals and total registered voters and you’d like to calculate turnout percentage.</p>
+<p>After running <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> on your data, you can use this package’s visualization functions on the results to create tables, bar graphs, and maps.</p>
 <div id="data-format" class="section level4">
 <h4 class="hasAnchor">
 <a href="#data-format" class="anchor"></a>Data format</h4>
-<p>If turnout_columns = FALSE, the election results file <em>must</em> be in the following 3-column format:</p>
+<p><code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> needs your data to be in a very specific format.</p>
+<p>If your CSV file or spreadsheet doesn’t include turnout data, that election results file <em>must</em> be in the following 3-column format:</p>
 <ul>
 <li>
 Column 1 should be the election districts (such as precinct, city, county, etc.).
@@ -136,20 +134,20 @@ Columns 2 and 3 should be the candidates’ names, “Yes” and “No” for ba
 </li>
 <p></p>
 <p>Do <em>not</em> include any column or row totals in the file!</p>
-<p>If you want to include turnout data, set turnout_columns = TRUE and include total number of votes in column 4 and total number of registered voters in column 5. <em>Don’t</em> include a column for turnout percent, as this will be calculated by wrangle_results().</p>
+<p>If your data <em>does</em> have turnout information, set turnout_columns = TRUE as an argument in <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code>. Your data needs to have total number of votes in column 4 and total number of registered voters in column 5. <em>Don’t</em> include a column for turnout percent, as this will be calculated by <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/smach/elections2">elections2</a></span><span class="op">)</span>
 <span class="va">results_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"FakeElectionResults.xlsx"</span>, package <span class="op">=</span> <span class="st">"elections2"</span><span class="op">)</span>
 
 <span class="va">my_election_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wrangle_results.html">wrangle_results</a></span><span class="op">(</span><span class="va">results_file</span><span class="op">)</span></pre></div>
-<p>The resulting data frame will include a Total row for use in generating tables. This package’s dataviz functions will remove the Total row if it exists, as long as you keep the name as ‘Total’.</p>
-<p>It will be in a format such as</p>
+<p>The result of <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> will be in a format such as:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_election_data</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt;   Precinct  No Yes Total Winner Yes_Pct No_Pct Yes_Pct_Margin Yes_Margin</span>
 <span class="co">#&gt; 1        1 603 755  1358    Yes   0.556  0.444          0.112        152</span>
 <span class="co">#&gt; 2        2 630 844  1474    Yes   0.573  0.427          0.146        214</span>
 <span class="co">#&gt; 3        3 764 657  1421     No   0.462  0.538         -0.076       -107</span></pre></div>
+<p>It includes a Total row.</p>
 </ul>
 </div>
 </div>
@@ -157,9 +155,24 @@ Columns 2 and 3 should be the candidates’ names, “Yes” and “No” for ba
 <h3 class="hasAnchor">
 <a href="#data-with-3-or-more-choices" class="anchor"></a>Data with 3 or more choices</h3>
 <p>To analyze and visualize election results with three or more choices – a crowded primary or a multi-party election, for example – use the <code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> function.</p>
-<p>The data spreadsheet or CSV should have the election district (precinct, city, etc.) in the first column. Vote totals (for candidates, parties, etc.) should be one column for each option. Don’t include a total row or column, since those will be calculated.</p>
-<p><code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> has two required arguments: the file name and a vector of character strings with all the vote columns by candidate/party/option. the starting column with results, and the ending column with results.</p>
+<p>For this function, your results spreadsheet or CSV should have the election district (precinct, city, etc.) in the first column. Vote totals (for candidates, parties, etc.) should be in a format with one column for each candidate Don’t include a total row or column, since those will be calculated.</p>
+<p><code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> has two required arguments: the file name and a vector of character strings with all the vote columns by candidate/party/option.</p>
 <p>The function also has four optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, show_margin to display a column with the difference between the 1st- and 2nd-place finishers, and show_margin_2vs3 to show the difference between the 2nd- and 3rd-place finishers.</p>
+<p>In the example below, I have a file of fake results for the “Red”, “Blue”, and “Green” parties. I’d like to show results as percents, and I don’t want a column for the runner up:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="va">myfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Fake3Columns.xlsx"</span>, package <span class="op">=</span> <span class="st">"elections2"</span><span class="op">)</span>
+
+<span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wrangle_more_cols.html">wrangle_more_cols</a></span><span class="op">(</span><span class="va">myfile</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Red"</span>, <span class="st">"Blue"</span>, <span class="st">"Green"</span><span class="op">)</span>, show_pcts <span class="op">=</span> <span class="cn">TRUE</span>, show_runnerup <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span>
+<span class="co">#&gt;     City   Red  Blue Green      Winner Margin</span>
+<span class="co">#&gt; 1 City A 0.730 0.062 0.208         Red  0.522</span>
+<span class="co">#&gt; 2 City B 0.266 0.367 0.367 Blue, Green  0.000</span>
+<span class="co">#&gt; 3 City C 0.336 0.332 0.332         Red  0.004</span>
+<span class="co">#&gt; 4 City Z   NaN   NaN   NaN                 NA</span>
+<span class="co">#&gt; 5 City D 0.251 0.496 0.253        Blue  0.243</span>
+<span class="co">#&gt; 6 City E 0.314 0.353 0.333        Blue  0.020</span></pre></div>
+<p><code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> has four optional arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, show_margin to display a column with the difference between the 1st- and 2nd-place finishers, and show_margin_2vs3 to show the difference between the 2nd- and 3rd-place finishers.</p>
 </div>
 </div>
 <div id="visualizations" class="section level2">
