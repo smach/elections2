@@ -6,7 +6,9 @@ Then, take those results and turn them into interactive tables, bar charts, and 
 
 election2 is designed for journalists, hobbyists, analysts, and data geeks who want to quickly go from a spreadsheet or CSV file with raw vote totals to visualizations that help you see trends behind the data.
 
-Note: This package is not on CRAN, so you need to install it from GitHub with the R package and function of your choice, such as `remotes::install_github("smach/elections2")`
+Note: This package is not on CRAN, so you need to install it from GitHub with the R package and function of your choice, such as
+
+`devtools::install_github("smach/elections2", build_vignettes = TRUE)`
 
 ## Data wrangling
 
