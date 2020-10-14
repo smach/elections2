@@ -60,9 +60,9 @@ To analyze and visualize election results with three or more choices -- a crowde
 
 For this function, your results spreadsheet or CSV should have the election district (precinct, city, etc.) in the first column. Vote totals (for candidates, parties, etc.) should be in a format with one column for each candidate Don't include a total row or column, since those will be calculated.
 
-`wrangle_more_cols()` has two required arguments: the file name and a vector of character strings with all the vote columns by candidate/party/option. 
+`wrangle_more_cols()` has two required arguments: election_results_file, the file name; and votes_cols, a vector of character strings with all the vote columns by candidate/party/option. votes_cols can also be an vector of integers with column index numbers instead of names if the optional argument use_column_numbers is set to TRUE.
 
-The function also has four optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, show_margin to display a column with the difference between the 1st- and 2nd-place finishers, and show_margin_2vs3 to show the difference between the 2nd- and 3rd-place finishers. 
+`wrangle_more_cols()` also has five optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, show_margin to display a column with the difference between the 1st- and 2nd-place finishers,  show_margin_2vs3 to show the difference between the 2nd- and 3rd-place finishers, and use_column_numbers if you want to use column index numbers instead of column names for the vector of vote columns.
 
 In the example below, I have a file of fake results for the "Red", "Blue", and "Green" parties. I'd like to show results as percents, and I don't want a column for the runner up:
 

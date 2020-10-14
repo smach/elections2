@@ -1,11 +1,12 @@
 #' Get winner for race with three or more candidates
 #'
 #' @param election_results_file character string with name of Excel or CSV file in format with election district in 1st col.
-#' @param votes_cols vector of character strings with names of columns containing votes
+#' @param votes_cols vector of character strings with names of columns containing votes (or numeric vector if use_column_numbers is TRUE)
 #' @param show_pcts logical TRUE to display results as percents. Defaults to FALSE for vote totals.
 #' @param show_runnerup logical TRUE to show 2nd place finisher. Defaults to TRUE.
 #' @param show_margin logical TRUE to show margin between 1st and 2nd place. Defaults to TRUE.
 #' @param show_margin_2vs3 logical TRUE to show margin between 2nd and 3rd place. Defaults to FALSE
+#' @params use_column_numbers logical TRUE to use column index numbers instead of character strings with column names in votes_cols. Defaults to FALSE.
 #'
 #' @return data table with results, totals, and district winner by number of votes
 #' @export wrangle_more_cols
@@ -13,10 +14,13 @@
 #' myfile <- system.file("extdata", "Fake3Columns.xlsx", package = "elections2")
 #' mydata <- wrangle_more_cols(myfile, c("Red", "Blue", "Green"), show_pcts = TRUE, show_runnerup = FALSE)
 
-wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FALSE, show_runnerup = TRUE, show_margin = TRUE, show_margin_2vs3 = FALSE) {
+wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FALSE, show_runnerup = TRUE, show_margin = TRUE, show_margin_2vs3 = FALSE, use_column_numbers = FALSE) {
   results_all <- rio::import(election_results_file)
   results_all <- na2zero2(results_all)
   district_col <- names(results_all)[1]
+  if(use_column_numbers) {
+    votes_cols <- names(results_all)[votes_cols]
+  }
   results_all <- results_all[, c(district_col, votes_cols)]
   col_nums <- match(votes_cols, names(results_all) )
   vote_results <- janitor::adorn_totals(results_all, "row")

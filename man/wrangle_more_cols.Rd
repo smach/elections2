@@ -10,13 +10,14 @@ wrangle_more_cols(
   show_pcts = FALSE,
   show_runnerup = TRUE,
   show_margin = TRUE,
-  show_margin_2vs3 = FALSE
+  show_margin_2vs3 = FALSE,
+  use_column_numbers = FALSE
 )
 }
 \arguments{
 \item{election_results_file}{character string with name of Excel or CSV file in format with election district in 1st col.}
 
-\item{votes_cols}{vector of character strings with names of columns containing votes}
+\item{votes_cols}{vector of character strings with names of columns containing votes (or numeric vector if use_column_numbers is TRUE)}
 
 \item{show_pcts}{logical TRUE to display results as percents. Defaults to FALSE for vote totals.}
 
