@@ -6,7 +6,7 @@
 #' @param show_runnerup logical TRUE to show 2nd place finisher. Defaults to TRUE.
 #' @param show_margin logical TRUE to show margin between 1st and 2nd place. Defaults to TRUE.
 #' @param show_margin_2vs3 logical TRUE to show margin between 2nd and 3rd place. Defaults to FALSE
-#' @params use_column_numbers logical TRUE to use column index numbers instead of character strings with column names in votes_cols. Defaults to FALSE.
+#' @param use_column_numbers logical TRUE to use column index numbers instead of character strings with column names in votes_cols. Defaults to FALSE.
 #'
 #' @return data table with results, totals, and district winner by number of votes
 #' @export wrangle_more_cols
