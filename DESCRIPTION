@@ -23,18 +23,18 @@ Imports:
     DT,
     dplyr,
     sparkline,
-    reactable
+    reactable,
+    plotly,
+    stringr
 Depends: 
     ggplot2,
     leaflet,
     R (>= 3.5)
 Suggests: 
-    plotly,
     gtools,
     knitr,
     testthat,
-    rmarkdown,
-    stringr
+    rmarkdown
 VignetteBuilder: knitr
 URL: https://github.com/smach/elections2
 BugReports: https://github.com/smach/elections2/issues

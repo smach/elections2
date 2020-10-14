@@ -72,13 +72,6 @@ my_election_data <- my_election_data %>%
 
 ```
 
-Since elections2 uses the data.table package and the resulting data frame is also a data.table, data.table syntax works for this as well:
-
-```{r eval=FALSE}
-my_election_data[, Precinct := factor(Precinct, levels = gtools::mixedsort(Precinct), ordered = TRUE)]
-```
-
-
 You can change the ggplot2 theme with the `bargraph_of_margin()` function's `theme` argument and add a headline with the `headline` argument.
 
 If you are familiar with ggplot2, you can add to or tweak the graph object with conventional ggplot2 code as well using arguments available within the bargraph_of_margin() funct. For example, you can change the y axis to show as percents with:
@@ -113,7 +106,7 @@ bargraph_of_margins(my_election_data, Precinct, Yes_Pct_Margin, order_bars_desc 
 
 ### Interactive HTML graphs
 
-You can turn any of these graphs into interactive HTML versions with the plotly package's ggplotly function. Make sure to install plotly if it's not yet on your system.
+You can turn any of these graphs into interactive HTML versions with the plotly package's ggplotly function. 
 
 ```{r message=FALSE, warning=FALSE, fig.width=7}
 

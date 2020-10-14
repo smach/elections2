@@ -12,10 +12,10 @@
 #' @export wrangle_results
 #' @importFrom data.table ":="
 #' @import data.table
-#'@examples
+#' @examples
 #' my_election_results <- wrangle_results(system.file("extdata", "FakeElectionResults.xlsx", package = "elections2"))
 
-wrangle_results <- function(election_results_file, turnout_columns = FALSE) {
+wrangle_results <- function(election_results_file, turnout_columns = FALSE, use_column_numbers = FALSE) {
   if(grepl("csv|xls", election_results_file)){
     results_all <- rio::import(election_results_file)
   } else {

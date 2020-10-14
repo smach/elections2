@@ -4,7 +4,11 @@
 \alias{wrangle_results}
 \title{Get election winner and loser by election district from spreadsheet or CSV file}
 \usage{
-wrangle_results(election_results_file, turnout_columns = FALSE)
+wrangle_results(
+  election_results_file,
+  turnout_columns = FALSE,
+  use_column_numbers = FALSE
+)
 }
 \arguments{
 \item{election_results_file}{Excel or CSV file of election results with only two candidates (or yes/no for ballot questions). You can also use the name of an R data frame if you already have your results data in R, but the object name MUST be in quotation marks.
