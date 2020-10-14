@@ -7,13 +7,13 @@
 wrangle_results(election_results_file, turnout_columns = FALSE)
 }
 \arguments{
-\item{election_results_file}{Excel or CSV file of election results with only two candidates (or yes/no for ballot questions).
-If turnout_columns = FALSE, your spreadsheet should have only 3 required columns:
+\item{election_results_file}{Excel or CSV file of election results with only two candidates (or yes/no for ballot questions). You can also use the name of an R data frame if you already have your results data in R, but the object name MUST be in quotation marks.
+If turnout_columns = FALSE, your data should have only 3 required columns:
 Column 1 the precinct, city, county, state, or other election district; and columns 2 and 3 the candidate names (or yes and no, or any other two choices).
 Do NOT include any column or row totals.
 If turnout_columns = TRUE, include columns for total votes cast and total registered voters (but NOT turnout percent).}
 
-\item{turnout_columns}{logical TRUE if spreadsheet includes columns for total votes cast and total registered voters. Defaults to FALSE.}
+\item{turnout_columns}{logical TRUE if data includes columns for total votes cast and total registered voters. Defaults to FALSE.}
 }
 \value{
 data frame with additional columns for total votes, winner, winner percent, loser's percent, winner's vote margin, and winner's percentage point margin.

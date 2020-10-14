@@ -15,7 +15,7 @@ wrangle_more_cols(
 )
 }
 \arguments{
-\item{election_results_file}{character string with name of Excel or CSV file in format with election district in 1st col.}
+\item{election_results_file}{character string with name of Excel or CSV file in format with election district in 1st col. You can also use the name of an R data frame if you already have your results data in R, but the object name MUST be in quotation marks.}
 
 \item{votes_cols}{vector of character strings with names of columns containing votes (or numeric vector if use_column_numbers is TRUE)}
 

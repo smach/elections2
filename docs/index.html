@@ -131,13 +131,13 @@ Columns 2 and 3 should be the candidates’ names, “Yes” and “No” for ba
 <p>my_election_data &lt;- wrangle_results(results_file)</p>
 </ul>
 <pre><code>
-
 The result of `wrangle_results()` will be in a format such as:
 
 ```{r viewdata }
 head(my_election_data, n = 3)
 </code></pre>
 <p>It includes a Total row.</p>
+<p>Per a user request, wrangle_results() <em>also</em> can take the name of a data frame with data in the proper format. The name of the object <em>must</em> be in quotation marks.</p>
 </div>
 </div>
 <div id="data-with-3-or-more-choices" class="section level3">
@@ -146,6 +146,7 @@ head(my_election_data, n = 3)
 <p>To analyze and visualize election results with three or more choices – a crowded primary or a multi-party election, for example – use the <code><a href="reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> function.</p>
 <p>For this function, your results spreadsheet or CSV should have the election district (precinct, city, etc.) in the first column. Vote totals (for candidates, parties, etc.) should be in a format with one column for each candidate Don’t include a total row or column, since those will be calculated.</p>
 <p><code><a href="reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> has two required arguments: election_results_file, the file name; and votes_cols, a vector of character strings with all the vote columns by candidate/party/option. votes_cols can also be an vector of integers with column index numbers instead of names if the optional argument use_column_numbers is set to TRUE.</p>
+<p>Per a user request, <code><a href="reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> <em>also</em> can take the name of a data frame with data in the proper format. The name of the object <em>must</em> be in quotation marks.</p>
 <p><code><a href="reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> also has five optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, show_margin to display a column with the difference between the 1st- and 2nd-place finishers, show_margin_2vs3 to show the difference between the 2nd- and 3rd-place finishers, and use_column_numbers if you want to use column index numbers instead of column names for the vector of vote columns.</p>
 <p>In the example below, I have a file of fake results for the “Red”, “Blue”, and “Green” parties. I’d like to show results as percents, and I don’t want a column for the runner up:</p>
 <pre class="{r}"><code>myfile &lt;- system.file("extdata", "Fake3Columns.xlsx", package = "elections2")

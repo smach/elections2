@@ -1,6 +1,6 @@
 #' Get winner for race with three or more candidates
 #'
-#' @param election_results_file character string with name of Excel or CSV file in format with election district in 1st col.
+#' @param election_results_file character string with name of Excel or CSV file in format with election district in 1st col. You can also use the name of an R data frame if you already have your results data in R, but the object name MUST be in quotation marks.
 #' @param votes_cols vector of character strings with names of columns containing votes (or numeric vector if use_column_numbers is TRUE)
 #' @param show_pcts logical TRUE to display results as percents. Defaults to FALSE for vote totals.
 #' @param show_runnerup logical TRUE to show 2nd place finisher. Defaults to TRUE.
@@ -15,7 +15,11 @@
 #' mydata <- wrangle_more_cols(myfile, c("Red", "Blue", "Green"), show_pcts = TRUE, show_runnerup = FALSE)
 
 wrangle_more_cols <- function(election_results_file, votes_cols, show_pcts = FALSE, show_runnerup = TRUE, show_margin = TRUE, show_margin_2vs3 = FALSE, use_column_numbers = FALSE) {
+  if(grepl("csv|xls", election_results_file)){
   results_all <- rio::import(election_results_file)
+  } else {
+    results_all <- get(election_results_file)
+  }
   results_all <- na2zero2(results_all)
   district_col <- names(results_all)[1]
   if(use_column_numbers) {

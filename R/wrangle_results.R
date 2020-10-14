@@ -2,12 +2,12 @@
 
 #' Get election winner and loser by election district from spreadsheet or CSV file
 #'
-#' @param election_results_file Excel or CSV file of election results with only two candidates (or yes/no for ballot questions).
-#' If turnout_columns = FALSE, your spreadsheet should have only 3 required columns:
+#' @param election_results_file Excel or CSV file of election results with only two candidates (or yes/no for ballot questions). You can also use the name of an R data frame if you already have your results data in R, but the object name MUST be in quotation marks.
+#' If turnout_columns = FALSE, your data should have only 3 required columns:
 #' Column 1 the precinct, city, county, state, or other election district; and columns 2 and 3 the candidate names (or yes and no, or any other two choices).
 #' Do NOT include any column or row totals.
 #' If turnout_columns = TRUE, include columns for total votes cast and total registered voters (but NOT turnout percent).
-#' @param turnout_columns logical TRUE if spreadsheet includes columns for total votes cast and total registered voters. Defaults to FALSE.
+#' @param turnout_columns logical TRUE if data includes columns for total votes cast and total registered voters. Defaults to FALSE.
 #' @return data frame with additional columns for total votes, winner, winner percent, loser's percent, winner's vote margin, and winner's percentage point margin.
 #' @export wrangle_results
 #' @importFrom data.table ":="
@@ -16,7 +16,11 @@
 #' my_election_results <- wrangle_results(system.file("extdata", "FakeElectionResults.xlsx", package = "elections2"))
 
 wrangle_results <- function(election_results_file, turnout_columns = FALSE) {
-  results_all <- rio::import(election_results_file)
+  if(grepl("csv|xls", election_results_file)){
+    results_all <- rio::import(election_results_file)
+  } else {
+    results_all <- get(election_results_file)
+  }
   results <- results_all[, 1:3]
   results <- janitor::adorn_totals(results, c("row", "col"))
 

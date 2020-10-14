@@ -151,15 +151,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>election_results_file</th>
-      <td><p>Excel or CSV file of election results with only two candidates (or yes/no for ballot questions).
-If turnout_columns = FALSE, your spreadsheet should have only 3 required columns:
+      <td><p>Excel or CSV file of election results with only two candidates (or yes/no for ballot questions). You can also use the name of an R data frame if you already have your results data in R, but the object name MUST be in quotation marks.
+If turnout_columns = FALSE, your data should have only 3 required columns:
 Column 1 the precinct, city, county, state, or other election district; and columns 2 and 3 the candidate names (or yes and no, or any other two choices).
 Do NOT include any column or row totals.
 If turnout_columns = TRUE, include columns for total votes cast and total registered voters (but NOT turnout percent).</p></td>
     </tr>
     <tr>
       <th>turnout_columns</th>
-      <td><p>logical TRUE if spreadsheet includes columns for total votes cast and total registered voters. Defaults to FALSE.</p></td>
+      <td><p>logical TRUE if data includes columns for total votes cast and total registered voters. Defaults to FALSE.</p></td>
     </tr>
     </table>
 
