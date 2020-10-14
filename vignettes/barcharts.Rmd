@@ -2,7 +2,7 @@
 title: "Barcharts"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{barcharts}
+  %\VignetteIndexEntry{Barcharts}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

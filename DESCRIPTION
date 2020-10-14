@@ -22,7 +22,8 @@ Imports:
     data.table (>= 1.13.0),
     DT,
     dplyr,
-    sparkline
+    sparkline,
+    reactable
 Depends: 
     ggplot2,
     leaflet,

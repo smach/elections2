@@ -2,7 +2,7 @@
 title: "Mapping Turnout"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{turnout}
+  %\VignetteIndexEntry{Mapping Turnout}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
