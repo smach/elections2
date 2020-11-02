@@ -45,7 +45,7 @@ After running `wrangle_results()` on your data, you can use this package's visua
 
 `wrangle_results()` needs your data to be in a very specific format.
 
-If your CSV file or spreadsheet doesn't include turnout data, that election results file _must_ be in the following 3-column format:
+If your CSV file or spreadsheet (or R object) doesn't include turnout data, that election results file _must_ be in the following 3-column format:
 
 <ul><li>Column 1 should be the election districts (such as precinct, city, county, etc.).</li><br />
 <li>Columns 2 and 3 should be the candidates' names, "Yes" and "No" for ballot questions, etc. The values should be _raw vote totals_ and not percents.</li></br />

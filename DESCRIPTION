@@ -1,7 +1,7 @@
 Package: elections2
 Type: Package
 Title: Wrangle and Visualize Election Data With 2 Candidates or Choices
-Version: 0.6.0
+Version: 0.7.0
 Author: Sharon Machlis
 Maintainer: Sharon Machlis <DoMoreWithR@machlis.com>
 Description: Calculate winners, percents, and victory/loss margins from a spreadsheet or CSV of election results.

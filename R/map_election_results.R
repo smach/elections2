@@ -39,21 +39,25 @@ map_election_results <- function(joined_df, win_col, lose_col, election_district
 if(grepl("_Pct", win_col)) {
   winner_popup <- glue::glue("<strong>{election_district_col}: {winner_df[[election_district_col]]}</strong><br /><strong>Winner: {winner_df[['Winner']]}</strong><br /<br>{winner_name}: {scales::percent(winner_df[[win_col]], accuracy = .1)}<br />{loser_name}: {scales::percent(winner_df[[lose_col]], accuracy = .1)}")  %>%   lapply(htmltools::HTML)
 
+  if(nrow(loser_df) > 0) {
   loser_popup <- glue::glue("<strong>{election_district_col}: {loser_df[[election_district_col]]}</strong><br /><strong>Winner: {loser_df[['Winner']]}</strong><br /<br>{winner_name}: {scales::percent(loser_df[[win_col]], accuracy = .1)}<br />{loser_name}: {scales::percent(loser_df[[lose_col]], accuracy = .1)}")  %>%   lapply(htmltools::HTML)
+  }
 
 } else if (grepl("_Margin", win_col)) {
 
   winner_popup <- glue::glue("<strong>{election_district_col}: {winner_df[[election_district_col]]}</strong><br /><strong>Winner: {winner_df[['Winner']]}</strong><br /<br>Margin: {scales::comma(winner_df[[win_col]], accuracy = 1)}")  %>%   lapply(htmltools::HTML)
 
+  if(nrow(loser_df) > 0) {
   loser_popup <- glue::glue("<strong>{election_district_col}: {loser_df[[election_district_col]]}</strong><br /><strong>Winner: {loser_df[['Winner']]}</strong><br /<br>Margin: {scales::comma(loser_df[[lose_col]], accuracy = 1)}")  %>%   lapply(htmltools::HTML)
-
+}
 
 } else {
 
   winner_popup <- glue::glue("<strong>{election_district_col}: {winner_df[[election_district_col]]}</strong><br /><strong>Winner: {winner_df[['Winner']]}</strong><br /<br>{winner_name}: {scales::comma(winner_df[[win_col]], accuracy = 1)}<br />{loser_name}: {scales::comma(winner_df[[lose_col]], accuracy = 1)}")  %>%   lapply(htmltools::HTML)
 
+  if(nrow(loser_df) > 0) {
   loser_popup <- glue::glue("<strong>{election_district_col}: {loser_df[[election_district_col]]}</strong><br /><strong>Winner: {loser_df[['Winner']]}</strong><br /<br>{winner_name}: {scales::comma(loser_df[[win_col]], accuracy = 1)}<br />{loser_name}: {scales::comma(loser_df[[lose_col]], accuracy = 1)}")  %>%   lapply(htmltools::HTML)
-
+}
 
 
 }
@@ -69,7 +73,10 @@ if(grepl("_Pct", win_col)) {
       color = "#666",
       weight = 1,
       label = winner_popup
-    ) %>%
+    )
+
+  if(nrow(loser_df) > 0) {
+  my_map <- my_map %>%
     addPolygons(
       data = loser_df,
       stroke = TRUE,
@@ -80,7 +87,7 @@ if(grepl("_Pct", win_col)) {
       weight = 1,
       label = loser_popup
     )
-
+}
 
   if(nrow(tie_df) > 0) {
     tie_popup <- glue::glue("<strong>{election_district_col}: {tie_df[[election_district_col]]}</strong><br /><strong>Winner: {tie_df[['Winner']]}</strong><br /<br>{winner_name}: {scales::percent(tie_df[[win_col]])}<br />{loser_name}: {scales::percent(tie_df[[lose_col]])}")  %>%   lapply(htmltools::HTML)
