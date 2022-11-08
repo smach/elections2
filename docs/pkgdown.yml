@@ -7,5 +7,8 @@ articles:
   maps: maps.html
   tables: tables.html
   turnout: turnout.html
-last_built: 2022-11-08T14:04Z
+last_built: 2022-11-08T14:13Z
+urls:
+  reference: https://smach.github.io/elections2/reference
+  article: https://smach.github.io/elections2/articles
 
