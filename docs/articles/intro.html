@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">elections2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/smach/elections2/">
+  <a href="https://github.com/smach/elections2/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -91,13 +87,13 @@
 
       
 
-      </header><script src="intro_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Intro</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/smach/elections2/blob/master/vignettes/intro.Rmd"><code>vignettes/intro.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/smach/elections2/blob/HEAD/vignettes/intro.Rmd" class="external-link"><code>vignettes/intro.Rmd</code></a></small>
       <div class="hidden name"><code>intro.Rmd</code></div>
 
     </div>
@@ -105,123 +101,195 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/smach/elections2">elections2</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: ggplot2</span>
-<span class="co">#&gt; Loading required package: leaflet</span></code></pre></div>
-<p>Easily analyze your election results data with the election2 package. One command calculates winners and percents for each election district row as well as overall totals.</p>
-<p>Then, take those results and turn them into interactive tables, bar charts, and maps with functions like <code><a href="../reference/bargraph_of_margins.html">bargraph_of_margins()</a></code>, <code><a href="../reference/quick_table.html">quick_table()</a></code>, and <code><a href="../reference/map_election_results.html">map_election_results()</a></code>.</p>
-<p>election2 is designed for journalists, hobbyists, analysts, and data geeks who want to quickly go from a spreadsheet or CSV file with raw vote totals to visualizations that help you see trends behind the data.</p>
-<p>Note: This package is not on CRAN, so you need to install it from GitHub with the R package and function of your choice, such as</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/smach/elections2" class="external-link">elections2</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: ggplot2</span></span>
+<span><span class="co">#&gt; Loading required package: leaflet</span></span></code></pre></div>
+<p>Easily analyze your election results data with the election2 package.
+One command calculates winners and percents for each election district
+row as well as overall totals.</p>
+<p>Then, take those results and turn them into interactive tables, bar
+charts, and maps with functions like <code><a href="../reference/bargraph_of_margins.html">bargraph_of_margins()</a></code>,
+<code><a href="../reference/quick_table.html">quick_table()</a></code>, and <code><a href="../reference/map_election_results.html">map_election_results()</a></code>.</p>
+<p>election2 is designed for journalists, hobbyists, analysts, and data
+geeks who want to quickly go from a spreadsheet or CSV file with raw
+vote totals to visualizations that help you see trends behind the
+data.</p>
+<p>Note: This package is not on CRAN, so you need to install it from
+GitHub with the R package and function of your choice, such as</p>
 <p><code>devtools::install_github("smach/elections2", build_vignettes = TRUE)</code></p>
-<div id="data-wrangling" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data-wrangling" class="anchor"></a>Data wrangling</h2>
-<p>To use elections2 for your elections data, start with one of the package functions that wrangle a spreadsheet or CSV file with election results. You’ve got two options: <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> to generate detailed results from a file <em>with only two candidates or choices;</em> and <code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> for results with <em>more than two choices.</em></p>
-<div id="data-with-only-2-choices" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data-with-only-2-choices" class="anchor"></a>Data with only 2 choices</h3>
-<p><code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> is for when you want to compare the performance of only two candidates or a yes-no ballot question. That means you don’t wish to include additional results such as third parties, write-ins, or blanks.</p>
-<p>The function returns winner, percents, and percent and vote margins for each row as well as an overall total. The function also has a turnout_columns option if your data includes columns for vote totals and total registered voters and you’d like to calculate turnout percentage.</p>
-<p>After running <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> on your data, you can use this package’s visualization functions on the results to create tables, bar graphs, and maps.</p>
-<div id="data-format" class="section level4">
-<h4 class="hasAnchor">
-<a href="#data-format" class="anchor"></a>Data format</h4>
-<p><code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> needs your data to be in a very specific format.</p>
-<p>If your CSV file or spreadsheet (or R object) doesn’t include turnout data, that election results file <em>must</em> be in the following 3-column format:</p>
+<div class="section level2">
+<h2 id="data-wrangling">Data wrangling<a class="anchor" aria-label="anchor" href="#data-wrangling"></a>
+</h2>
+<p>To use elections2 for your elections data, start with one of the
+package functions that wrangle a spreadsheet or CSV file with election
+results. You’ve got two options: <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> to
+generate detailed results from a file <em>with only two candidates or
+choices;</em> and <code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> for results with
+<em>more than two choices.</em></p>
+<div class="section level3">
+<h3 id="data-with-only-2-choices">Data with only 2 choices<a class="anchor" aria-label="anchor" href="#data-with-only-2-choices"></a>
+</h3>
+<p><code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> is for when you want to compare the
+performance of only two candidates or a yes-no ballot question. That
+means you don’t wish to include additional results such as third
+parties, write-ins, or blanks.</p>
+<p>The function returns winner, percents, and percent and vote margins
+for each row as well as an overall total. The function also has a
+turnout_columns option if your data includes columns for vote totals and
+total registered voters and you’d like to calculate turnout
+percentage.</p>
+<p>After running <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> on your data, you can
+use this package’s visualization functions on the results to create
+tables, bar graphs, and maps.</p>
+<div class="section level4">
+<h4 id="data-format">Data format<a class="anchor" aria-label="anchor" href="#data-format"></a>
+</h4>
+<p><code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> needs your data to be in a very
+specific format.</p>
+<p>If your CSV file or spreadsheet (or R object) doesn’t include turnout
+data, that election results file <em>must</em> be in the following
+3-column format:</p>
 <ul>
 <li>
-Column 1 should be the election districts (such as precinct, city, county, etc.).
+Column 1 should be the election districts (such as precinct, city,
+county, etc.).
 </li>
 <br><li>
-Columns 2 and 3 should be the candidates’ names, “Yes” and “No” for ballot questions, etc. The values should be <em>raw vote totals</em> and not percents.
+Columns 2 and 3 should be the candidates’ names, “Yes” and “No” for
+ballot questions, etc. The values should be <em>raw vote totals</em> and
+not percents.
 </li>
 <p></p>
 <p>Do <em>not</em> include any column or row totals in the file!</p>
-<p>If your data <em>does</em> have turnout information, set turnout_columns = TRUE as an argument in <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code>. Your data needs to have total number of votes in column 4 and total number of registered voters in column 5. <em>Don’t</em> include a column for turnout percent, as this will be calculated by <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code>.</p>
+<p>If your data <em>does</em> have turnout information, set
+turnout_columns = TRUE as an argument in <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code>.
+Your data needs to have total number of votes in column 4 and total
+number of registered voters in column 5. <em>Don’t</em> include a column
+for turnout percent, as this will be calculated by
+<code><a href="../reference/wrangle_results.html">wrangle_results()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/smach/elections2">elections2</a></span><span class="op">)</span>
-<span class="va">results_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"FakeElectionResults.xlsx"</span>, package <span class="op">=</span> <span class="st">"elections2"</span><span class="op">)</span>
-
-<span class="va">my_election_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wrangle_results.html">wrangle_results</a></span><span class="op">(</span><span class="va">results_file</span><span class="op">)</span></code></pre></div>
-<p>The result of <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> will be in a format such as:</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/smach/elections2" class="external-link">elections2</a></span><span class="op">)</span></span>
+<span><span class="va">results_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"FakeElectionResults.xlsx"</span>, package <span class="op">=</span> <span class="st">"elections2"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">my_election_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wrangle_results.html">wrangle_results</a></span><span class="op">(</span><span class="va">results_file</span><span class="op">)</span></span></code></pre></div>
+<p>The result of <code><a href="../reference/wrangle_results.html">wrangle_results()</a></code> will be in a format such
+as:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_election_data</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;   Precinct  No Yes Total Winner Yes_Pct No_Pct Yes_Pct_Margin Yes_Margin</span>
-<span class="co">#&gt; 1        1 603 755  1358    Yes   0.556  0.444          0.112        152</span>
-<span class="co">#&gt; 2        2 630 844  1474    Yes   0.573  0.427          0.146        214</span>
-<span class="co">#&gt; 3        3 764 657  1421     No   0.462  0.538         -0.076       -107</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_election_data</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Precinct  No Yes Total Winner Yes_Pct No_Pct Yes_Pct_Margin Yes_Margin</span></span>
+<span><span class="co">#&gt; 1        1 603 755  1358    Yes   0.556  0.444          0.112        152</span></span>
+<span><span class="co">#&gt; 2        2 630 844  1474    Yes   0.573  0.427          0.146        214</span></span>
+<span><span class="co">#&gt; 3        3 764 657  1421     No   0.462  0.538         -0.076       -107</span></span></code></pre></div>
 <p>It includes a Total row.</p>
-<p>Per a user request, wrangle_results() <em>also</em> can take the name of a data frame with data in the proper format. The name of the object <em>must</em> be in quotation marks.</p>
+<p>Per a user request, wrangle_results() <em>also</em> can take the name
+of a data frame with data in the proper format. The name of the object
+<em>must</em> be in quotation marks.</p>
 </ul>
 </div>
 </div>
-<div id="data-with-3-or-more-choices" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data-with-3-or-more-choices" class="anchor"></a>Data with 3 or more choices</h3>
-<p>To analyze and visualize election results with three or more choices – a crowded primary or a multi-party election, for example – use the <code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> function.</p>
-<p>For this function, your results spreadsheet or CSV should have the election district (precinct, city, etc.) in the first column. Vote totals (for candidates, parties, etc.) should be in a format with one column for each candidate Don’t include a total row or column, since those will be calculated.</p>
-<p><code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> has two required arguments: election_results_file, the file name; and votes_cols, a vector of character strings with all the vote columns by candidate/party/option. votes_cols can also be an vector of integers with column index numbers instead of names if the optional argument use_column_numbers is set to TRUE.</p>
-<p>Per a user request, <code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> <em>also</em> can take the name of a data frame with data in the proper format. The name of the object <em>must</em> be in quotation marks.</p>
-<p><code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> also has five optional logical arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, show_margin to display a column with the difference between the 1st- and 2nd-place finishers, show_margin_2vs3 to show the difference between the 2nd- and 3rd-place finishers, and use_column_numbers if you want to use column index numbers instead of column names for the vector of vote columns.</p>
-<p>In the example below, I have a file of fake results for the “Red”, “Blue”, and “Green” parties. I’d like to show results as percents, and I don’t want a column for the runner up:</p>
+<div class="section level3">
+<h3 id="data-with-3-or-more-choices">Data with 3 or more choices<a class="anchor" aria-label="anchor" href="#data-with-3-or-more-choices"></a>
+</h3>
+<p>To analyze and visualize election results with three or more choices
+– a crowded primary or a multi-party election, for example – use the
+<code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> function.</p>
+<p>For this function, your results spreadsheet or CSV should have the
+election district (precinct, city, etc.) in the first column. Vote
+totals (for candidates, parties, etc.) should be in a format with one
+column for each candidate Don’t include a total row or column, since
+those will be calculated.</p>
+<p><code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> has two required arguments:
+election_results_file, the file name; and votes_cols, a vector of
+character strings with all the vote columns by candidate/party/option.
+votes_cols can also be an vector of integers with column index numbers
+instead of names if the optional argument use_column_numbers is set to
+TRUE.</p>
+<p>Per a user request, <code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> <em>also</em>
+can take the name of a data frame with data in the proper format. The
+name of the object <em>must</em> be in quotation marks.</p>
+<p><code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> also has five optional logical
+arguments: show_pcts to return results as percents instead of total
+votes, show_runnerup to include a column with the 2nd-place finisher,
+show_margin to display a column with the difference between the 1st- and
+2nd-place finishers, show_margin_2vs3 to show the difference between the
+2nd- and 3rd-place finishers, and use_column_numbers if you want to use
+column index numbers instead of column names for the vector of vote
+columns.</p>
+<p>In the example below, I have a file of fake results for the “Red”,
+“Blue”, and “Green” parties. I’d like to show results as percents, and I
+don’t want a column for the runner up:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">myfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Fake3Columns.xlsx"</span>, package <span class="op">=</span> <span class="st">"elections2"</span><span class="op">)</span>
-
-<span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wrangle_more_cols.html">wrangle_more_cols</a></span><span class="op">(</span><span class="va">myfile</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Red"</span>, <span class="st">"Blue"</span>, <span class="st">"Green"</span><span class="op">)</span>, show_pcts <span class="op">=</span> <span class="cn">TRUE</span>, show_runnerup <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span>
-<span class="co">#&gt;     City   Red  Blue Green      Winner Margin</span>
-<span class="co">#&gt; 1 City A 0.730 0.062 0.208         Red  0.522</span>
-<span class="co">#&gt; 2 City B 0.266 0.367 0.367 Blue, Green  0.000</span>
-<span class="co">#&gt; 3 City C 0.336 0.332 0.332         Red  0.004</span>
-<span class="co">#&gt; 4 City Z   NaN   NaN   NaN                 NA</span>
-<span class="co">#&gt; 5 City D 0.251 0.496 0.253        Blue  0.243</span>
-<span class="co">#&gt; 6 City E 0.314 0.353 0.333        Blue  0.020</span></code></pre></div>
-<p><code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> has four optional arguments: show_pcts to return results as percents instead of total votes, show_runnerup to include a column with the 2nd-place finisher, show_margin to display a column with the difference between the 1st- and 2nd-place finishers, and show_margin_2vs3 to show the difference between the 2nd- and 3rd-place finishers.</p>
+<code class="sourceCode R"><span><span class="va">myfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Fake3Columns.xlsx"</span>, package <span class="op">=</span> <span class="st">"elections2"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wrangle_more_cols.html">wrangle_more_cols</a></span><span class="op">(</span><span class="va">myfile</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Red"</span>, <span class="st">"Blue"</span>, <span class="st">"Green"</span><span class="op">)</span>, show_pcts <span class="op">=</span> <span class="cn">TRUE</span>, show_runnerup <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     City   Red  Blue Green      Winner Margin</span></span>
+<span><span class="co">#&gt; 1 City A 0.730 0.062 0.208         Red  0.522</span></span>
+<span><span class="co">#&gt; 2 City B 0.266 0.367 0.367 Blue, Green  0.000</span></span>
+<span><span class="co">#&gt; 3 City C 0.336 0.332 0.332         Red  0.004</span></span>
+<span><span class="co">#&gt; 4 City Z   NaN   NaN   NaN                 NA</span></span>
+<span><span class="co">#&gt; 5 City D 0.251 0.496 0.253        Blue  0.243</span></span>
+<span><span class="co">#&gt; 6 City E 0.314 0.353 0.333        Blue  0.020</span></span></code></pre></div>
+<p><code><a href="../reference/wrangle_more_cols.html">wrangle_more_cols()</a></code> has four optional arguments:
+show_pcts to return results as percents instead of total votes,
+show_runnerup to include a column with the 2nd-place finisher,
+show_margin to display a column with the difference between the 1st- and
+2nd-place finishers, and show_margin_2vs3 to show the difference between
+the 2nd- and 3rd-place finishers.</p>
 </div>
 </div>
-<div id="visualizations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#visualizations" class="anchor"></a>Visualizations</h2>
-<p><strong>Interactive tables</strong> Use the <code><a href="../reference/quick_table.html">quick_table()</a></code> or <code><a href="../reference/quick_table_more_cols.html">quick_table_more_cols()</a></code> functions. See the tables vignette with <code><a href="../articles/tables.html">vignette("tables", package = "elections2")</a></code> for more.</p>
-<p><strong>Bar charts</strong> Use the <code>bar_graph_of_winner_pct_margins()</code> function. See the barcharts vignette with <code><a href="../articles/barcharts.html">vignette("barcharts", package = "elections2")</a></code> for more info.</p>
-<p><strong>Election results maps</strong> See the maps vignette: `vignette(“maps”, package = “elections2”)</p>
-<p><strong>Turnout maps</strong> See the turnout maps vignette: `vignette(“map_turnout”, package = “elections2”)</p>
+<div class="section level2">
+<h2 id="visualizations">Visualizations<a class="anchor" aria-label="anchor" href="#visualizations"></a>
+</h2>
+<p><strong>Interactive tables</strong> Use the
+<code><a href="../reference/quick_table.html">quick_table()</a></code> or <code><a href="../reference/quick_table_more_cols.html">quick_table_more_cols()</a></code>
+functions. See the tables vignette with
+<code><a href="../articles/tables.html">vignette("tables", package = "elections2")</a></code> for more.</p>
+<p><strong>Bar charts</strong> Use the
+<code>bar_graph_of_winner_pct_margins()</code> function. See the
+barcharts vignette with
+<code><a href="../articles/barcharts.html">vignette("barcharts", package = "elections2")</a></code> for more
+info.</p>
+<p><strong>Election results maps</strong> See the maps vignette:
+`vignette(“maps”, package = “elections2”)</p>
+<p><strong>Turnout maps</strong> See the turnout maps vignette:
+`vignette(“map_turnout”, package = “elections2”)</p>
 </div>
   </div>
 
@@ -236,11 +304,13 @@ Columns 2 and 3 should be the candidates’ names, “Yes” and “No” for ba
 
 
       <footer><div class="copyright">
-  <p>Developed by Sharon Machlis.</p>
+  <p></p>
+<p>Developed by Sharon Machlis.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -248,6 +318,8 @@ Columns 2 and 3 should be the candidates’ names, “Yes” and “No” for ba
 
   
 
+
+  
 
   </body>
 </html>
