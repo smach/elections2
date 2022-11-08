@@ -29,14 +29,14 @@ After running `wrangle_results()` on your data, you can use this package's visua
 
 If your CSV file or spreadsheet doesn't include turnout data, that election results file _must_ be in the following 3-column format:
 
-<ul><li>Column 1 should be the election districts (such as precinct, city, county, etc.).</li><br />
-<li>Columns 2 and 3 should be the candidates' names, "Yes" and "No" for ballot questions, etc. The values should be _raw vote totals_ and not percents.</li></br />
+**Column 1** should be the election districts (such as precinct, city, county, etc.). 
+**Columns 2 and 3** should be the candidates' names, "Yes" and "No" for ballot questions, etc. The values should be _raw vote totals_ and not percents.
 
 Do _not_ include any column or row totals in the file!
 
 If your data _does_ have turnout information, set turnout_columns = TRUE as an argument in `wrangle_results()`. Your data needs to have total number of votes in column 4 and total number of registered voters in column 5. _Don't_ include a column for turnout percent, as this will be calculated by `wrangle_results()`.
 
-```{r import_results}
+```
 library(elections2)
 results_file <- system.file("extdata", "FakeElectionResults.xlsx", package = "elections2")
 
@@ -44,12 +44,11 @@ my_election_data <- wrangle_results(results_file)
 
 ```
 
-The result of `wrangle_results()` will be in a format such as:
+You can see result of `wrangle_results()` with a command such as:
 
-```{r viewdata }
-head(my_election_data, n = 3)
 
-```
+`head(my_election_data, n = 3)`
+
 
 It includes a Total row.
 
@@ -69,7 +68,7 @@ Per a user request, `wrangle_more_cols()` _also_ can take the name of a data fra
 
 In the example below, I have a file of fake results for the "Red", "Blue", and "Green" parties. I'd like to show results as percents, and I don't want a column for the runner up:
 
-```{r}
+```
 myfile <- system.file("extdata", "Fake3Columns.xlsx", package = "elections2")
 
 mydata <- wrangle_more_cols(myfile, c("Red", "Blue", "Green"), show_pcts = TRUE, show_runnerup = FALSE)
